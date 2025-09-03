@@ -2,19 +2,29 @@ import chalk from 'chalk'
 import { log } from './log'
 import fs from 'fs'
 
+// parsed file information
+
+interface ParsedFile {
+    filespec?: string,
+    content: string,
+    version: string,
+    version_parts: number[],
+    build: string
+}
+
 // find the first 0.0.0 version number in a file
 
-function getVersion(filespec: string): [string, string, number[], string] {
+function getVersion(filespec: string): ParsedFile {
     if(!fs.existsSync(filespec)) {
         log('fail', `File not found ${chalk.whiteBright(filespec)}`)
         process.exit(-1);
     }
 
-    const json = fs.readFileSync(filespec, { encoding: 'utf-8' })
+    const content = fs.readFileSync(filespec, { encoding: 'utf-8' })
     const version_regex = /(\d*)\.(\d*)\.(\d*)/
-    const version_match = version_regex.exec(json)
+    const version_match = version_regex.exec(content)
     const date_regex = /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)/
-    const date_match = date_regex.exec(json)
+    const date_match = date_regex.exec(content)
 
     if(!version_match) {
         log('fail', `Could not find version number in ${chalk.whiteBright(filespec)}`)
@@ -26,44 +36,44 @@ function getVersion(filespec: string): [string, string, number[], string] {
         process.exit(-1)
     }
 
-    return [
-        json,
-        version_match[0],
-        version_match.slice(1).map(v => Number.parseInt(v)),
-        date_match[0]
-    ];
+    return {
+        content,
+        version: version_match[0],
+        version_parts: version_match.slice(1).map(v => Number.parseInt(v)),
+        build: date_match[0]
+    };
+}
+
+// log information about parsed file
+
+function logVersion(expected_version: string, parsedFile: Required<ParsedFile>) {
+    let prefix: string
+    log('info', `${parsedFile.filespec} is version ${parsedFile.version} (${parsedFile.build})`)
+    if(expected_version !== parsedFile.version) {
+        log('warn', `${parsedFile.filespec} version does not match`)
+    }
 }
 
 // begin
 
 console.log()
 
+const targetFileSpec = [
+    './package.json',
+    './api/package.json',
+    './web/package.json',
+    './web/src/app/app.html'
+]
+
 // get file contents and versions from files
 
-const [package_json, package_json_version, old_parts, package_json_build] = getVersion('./package.json')
-const [api_package_json, api_package_json_version, _api_old_parts, api_package_json_build] = getVersion('./api/package.json')
-const [web_package_json, web_package_json_version, _web_old_parts, web_package_json_build] = getVersion('./web/package.json')
+const parsedFiles = targetFileSpec.map<Required<ParsedFile>>(filespec => ({filespec, ...getVersion(filespec)}))
 
-// log master package version
+// log versions
 
-log('info', `found version ${chalk.whiteBright(package_json_version)} in ${chalk.whiteBright('./package.json')}`)
-log('info', `found build ${chalk.whiteBright(package_json_build)} in ${chalk.whiteBright('./package.json')}`)
+const expected_version = parsedFiles[0].version
 
-// log api package version
-
-if(package_json_version === api_package_json_version) {
-    log('info', `found version ${api_package_json_version} in ${chalk.whiteBright('./api/package.json')}`)
-} else {
-    log('warn', `version ${api_package_json_version} in ${chalk.whiteBright('./api/package.json')} does not match`)
-}
-
-// log web package version
-
-if(package_json_version === web_package_json_version) {
-    log('info', `found version ${web_package_json_version} in ${chalk.whiteBright('./web/package.json')}`)
-} else {
-    log('warn', `version ${web_package_json_version} in ${chalk.whiteBright('./web/package.json')} does not match`)
-}
+parsedFiles.forEach(parsedFile => logVersion(expected_version, parsedFile))
 
 // obtain command parameter
 
@@ -78,50 +88,41 @@ const command = process.argv[2].toLocaleUpperCase()
 
 switch(command) {
     case 'MAJOR':
-        old_parts[0]++
-        old_parts[1] = 0
-        old_parts[2] = 0
+        parsedFiles[0].version_parts[0]++
+        parsedFiles[0].version_parts[1] = 0
+        parsedFiles[0].version_parts[2] = 0
         break
     case 'MINOR':
-        old_parts[1]++
-        old_parts[2] =0
+        parsedFiles[0].version_parts[1]++
+        parsedFiles[0].version_parts[2] =0
         break
     case 'BUILD':
-        old_parts[2]++
+        parsedFiles[0].version_parts[2]++
         break
     default:
         log('fail',`Unknown command ${chalk.whiteBright(command)}`)
         process.exit(-1)
 }
 
-const new_version = `${old_parts[0]}.${old_parts[1]}.${old_parts[2]}`
-log('info', `New version will be ${chalk.whiteBright(new_version)}`)
-
-// get new build date
-
+const new_version = `${parsedFiles[0].version_parts[0]}.${parsedFiles[0].version_parts[1]}.${parsedFiles[0].version_parts[2]}`
 const new_build = new Date().toISOString()
-log('info', `New build date will be ${chalk.whiteBright(new_build)}`)
+log('info', `New version will be ${chalk.whiteBright(`${new_version} (${new_build})`)}`)
 
 // compose replacement files
 
-const new_package_json = package_json
-    .replace(package_json_version, new_version)
-    .replace(package_json_build, new_build)
-const new_api_package_json = api_package_json
-    .replace(api_package_json_version, new_version)
-    .replace(api_package_json_build, new_build)
-const new_web_package_json = web_package_json
-    .replace(web_package_json_version, new_version)
-    .replace(api_package_json_build, new_build)
+const replacement_files = parsedFiles.map(parsedFile => ({
+    filespec: parsedFile.filespec,
+    content: parsedFile.content
+        .replace(parsedFile.version, new_version)
+        .replace(parsedFile.build, new_build)
+}))
 
 // write replacement files
 
-fs.writeFileSync('./package.json', new_package_json, { encoding: 'utf-8' })
-log('ok', `Updated ${chalk.whiteBright('./package.json')}`)
-fs.writeFileSync('./api/package.json', new_api_package_json, { encoding: 'utf-8' })
-log('ok', `Updated ${chalk.whiteBright('./api/package.json')}`)
-fs.writeFileSync('./web/package.json', new_web_package_json, { encoding: 'utf-8' })
-log('ok', `Updated ${chalk.whiteBright('./web/package.json')}`)
+replacement_files.forEach(({filespec, content}) => {
+    fs.writeFileSync(filespec, content, { encoding: 'utf-8' })
+    log('ok', `Updated ${chalk.whiteBright(filespec)}`)
+})
 
 // done
 
