@@ -123,4 +123,7 @@ log('ok', `Updated ${chalk.whiteBright('./api/package.json')}`)
 fs.writeFileSync('./web/package.json', new_web_package_json, { encoding: 'utf-8' })
 log('ok', `Updated ${chalk.whiteBright('./web/package.json')}`)
 
+// done
+
 log('done', `Done`)
+console.log()
