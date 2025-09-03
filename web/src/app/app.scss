@@ -1,0 +1,33 @@
+:host {
+    display: grid; height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'header'
+                         'main'
+                         'footer';
+}
+
+router-outlet {
+    // remove extraneous tag from flow
+    display: none;
+}
+
+header, footer {
+    text-align: center;
+    margin: 0.25cm;
+}
+
+header {
+    grid-area: header;
+    font-size: 1cm; line-height: 1cm;
+}
+
+main {
+    grid-area: main;
+    overflow: auto;
+}
+
+footer {
+    grid-area: footer;
+    font-size: 0.25cm; line-height: 0.25cm;
+}

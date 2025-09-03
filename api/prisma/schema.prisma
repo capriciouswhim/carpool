@@ -10,7 +10,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -18,8 +18,40 @@ generator tsed {
   provider = "tsed-prisma"
 }
 
-model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
+// Updating the unique serial number is not
+// supported by Prisma, but is handled in-db
+// by two triggers.
+
+/*
+
+-- CreateTriggers
+CREATE TRIGGER History_Insert
+AFTER INSERT ON History
+BEGIN
+  UPDATE History
+     SET serialNumber = (SELECT MAX(serialNumber) + 1 FROM History)
+   WHERE poolNumber = NEW.poolNumber;
+END;
+
+CREATE TRIGGER History_Update
+AFTER UPDATE ON History
+BEGIN
+  UPDATE History
+     SET serialNumber = (SELECT MAX(serialNumber) + 1 FROM History)
+   WHERE poolNumber = OLD.poolNumber;
+END;
+
+ */
+
+model History {
+  poolNumber   Int       @id
+  serialNumber Int       @default(0)
+  paused       Boolean   @default(false)
+  called       DateTime  @default(now())
+  released     DateTime?
+}
+
+model Flags {
+  name  String  @id
+  value Boolean
 }

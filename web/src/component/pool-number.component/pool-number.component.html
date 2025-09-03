@@ -1,0 +1,5 @@
+<div class="poolNumber" (click)="onClick(poolNumber())"
+     [class.new]="poolNumber().isNew"
+     [class.released]="poolNumber().isReleased"
+     [class.stale]="poolNumber().isStale"
+     [class.futuristic]="poolNumber().paused">{{ poolNumber().poolNumber }}</div>

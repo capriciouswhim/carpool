@@ -1,0 +1,3 @@
+@for(poolNumber of history$ | async; track poolNumber.poolNumber) {
+    <car-pool-number [poolNumber]="poolNumber" (click)="onClick($event)"></car-pool-number>
+}

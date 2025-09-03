@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+
+:host {
+    flex: none;
+    display: flex; justify-content: space-around;
+
+    @media (aspect-ratio >= 1) {
+        flex-direction: row;
+    }
+
+    @media (aspect-ratio <1) {
+        flex-direction: column;
+    }
+}
+
+.keypad {
+    flex: none;
+    display: grid;
+    grid-template-columns: repeat(3, 2cm);
+    gap: 1rem;
+}
+
+.wide {
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    text-align: center;
+
+    input {
+        text-align: center;
+    }
+}

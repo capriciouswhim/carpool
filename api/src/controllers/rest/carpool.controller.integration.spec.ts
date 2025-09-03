@@ -2,23 +2,23 @@ import { PlatformTest } from "@tsed/platform-http/testing";
 import SuperTest from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { Server } from "../../Server.js";
-import { HelloWorldController } from "./HelloWorldController.js";
+import { Server } from "../server.js";
+import { CarpoolController } from "./carpool.controller.js";
 
-describe("HelloWorldController", () => {
+describe("CarpoolController", () => {
   beforeAll(
     PlatformTest.bootstrap(Server, {
       mount: {
-        "/": [HelloWorldController]
+        "/": [CarpoolController]
       }
     })
   );
   afterAll(PlatformTest.reset);
 
-  it("should call GET /hello-world", async () => {
+  it("should call GET /carpool", async () => {
     const request = SuperTest(PlatformTest.callback());
-    const response = await request.get("/hello-world").expect(200);
+    const response = await request.get("/carpool").expect(200);
 
-    expect(response.text).toEqual("hello");
+    expect(response.text).toEqual("carpool");
   });
 });
