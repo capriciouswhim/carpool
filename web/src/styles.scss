@@ -37,9 +37,3 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-/* Disable double-tap to zoon */
-
-*, div, button, input, mat-input, mat-form-field {
-  touch-action: none;
-}
