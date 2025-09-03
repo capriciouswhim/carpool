@@ -1,20 +1,24 @@
 import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-// import { Store } from '@ngrx/store';
-// import { carpoolAction } from '../../store/carpool.action';
+import { Store } from '@ngrx/store';
+import { selectPaused } from '../../store/carpool.feature';
+import { carpoolAction } from '../../store/carpool.action';
+
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
   selector: 'car-keypad',
-  imports: [ FormsModule, MatButtonModule, MatInputModule, MatSlideToggleModule ],
+  imports: [ AsyncPipe, FormsModule, MatButtonModule, MatInputModule, MatSlideToggleModule ],
   templateUrl: './keypad.component.html',
   styleUrl: './keypad.component.scss'
 })
 export class KeypadComponent {
-  // store = inject(Store)
+  store = inject(Store)
+  paused$ = this.store.select(selectPaused)
   value = signal<number | null>(null)
 
   onBackspace() {
@@ -27,7 +31,7 @@ export class KeypadComponent {
 
   onClear() {
     this.value.set(null);
-    // this.store.dispatch(carpoolAction.cls());
+    this.store.dispatch(carpoolAction.cls());
   }
 
   onDigit(keyValue: number) {
@@ -38,7 +42,7 @@ export class KeypadComponent {
     const currentValue = this.value() ?? 0;
     this.value.set(null);
     if(currentValue !== 0) {
-      // this.store.dispatch(carpoolAction.add({ poolNumber: currentValue }))
+      this.store.dispatch(carpoolAction.add({ poolNumber: currentValue }))
     }
   }
 
@@ -78,6 +82,6 @@ export class KeypadComponent {
   }
 
   onToggle($event: any) {
-    // this.store.dispatch(carpoolAction.togglePause());
+    this.store.dispatch(carpoolAction.togglePause());
   }
 }
