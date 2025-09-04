@@ -60,8 +60,8 @@ sudo systemctl service stop carpool
 ## STARTUP
 
 ``` sh
-sudo systemctl service start nginx
 sudo systemctl service start carpool
+sudo systemctl service start nginx
 ```
 
 ## UPDATES
@@ -75,4 +75,7 @@ git stash
 git fetch
 git pull
 git stash pop
+
+*Rebuild API and WEB according to respective sections above
+
 *Start both services according to **STARTUP** above
