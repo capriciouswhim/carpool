@@ -32,6 +32,7 @@ A **systemd** service file is included to launch the API.
 We link to it from the default.target.wants folder.
 
 ``` sh
+chmod +x start.api
 sudo ln -s carpool.service /etc/systemd/system/default.target.wants/carpool.service
 sudo systemctl daemon-reload
 ```
@@ -62,3 +63,16 @@ sudo systemctl service stop carpool
 sudo systemctl service start nginx
 sudo systemctl service start carpool
 ```
+
+## UPDATES
+
+As you have likely edited the systemd service file,
+the nginx site file, or the startup script, we stash
+these changes before fetching and merging changes.
+
+*Stop both services according to **SHUTDOWN** above
+git stash
+git fetch
+git pull
+git stash pop
+*Start both services according to **STARTUP** above
