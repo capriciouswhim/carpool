@@ -1,0 +1,13 @@
+[Unit]
+Description=Carpool web service
+After=network.target
+
+[Service]
+User=dfranz
+WorkingDirectory=/home/dfranz/carpool-prod/
+ExecStart=/home/dfranz/carpool-prod/start.api
+Type=exec
+Restart=no
+
+[Install]
+WantedBy=default.target

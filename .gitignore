@@ -1,4 +1,3 @@
-**/emergency
 **/node_modules
-**/dist
+**/dist*
 **/*.sqlite.db

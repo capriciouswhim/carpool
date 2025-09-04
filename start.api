@@ -1,0 +1,4 @@
+#!/bin/bash
+cd api
+source $HOME/.nvm/nvm.sh
+yarn start

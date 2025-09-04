@@ -1,0 +1,40 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+        # server-name carpool.artsyteachy.com;
+
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+
+server {
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	root /var/www/html/carpool;
+	
+	location / {
+		try_files $uri $uri/ /index.html;
+		#rewrite ^ /index.html break;
+	}
+
+	location /assets/ {
+	}
+
+	location /api/ {
+		proxy_pass http://127.0.0.1:8083/rest/carpool/;
+	}
+
+	# Disable caching with HTTP headers
+	add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+	add_header Pragma "no-cache";
+	add_header Expires 0;
+
+	# managed by Certbot
+	ssl_certificate /etc/letsencrypt/live/carpool.artsyteachy.com/fullchain.pem; # managed by Certbot
+	ssl_certificate_key /etc/letsencrypt/live/carpool.artsyteachy.com/privkey.pem; # managed by Certbot
+	include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
