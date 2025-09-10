@@ -197,15 +197,17 @@ export class CarpoolService {
 
     // Door wants new numbers called immediately
     async setOptionCallImmediate(value: boolean) {
-        const today_date = Util.formatDate(new Date())
-
-        await this.db.flags.update({
+        const payload = {
+            name: 'callImmediate',
+            value
+        }
+        
+        await this.db.flags.upsert({
             where: {
                 name: 'callImmediate'
             },
-            data: {
-                value
-            }
+            create: payload,
+            update: payload
         })
     }
 
