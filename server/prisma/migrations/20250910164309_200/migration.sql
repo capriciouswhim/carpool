@@ -4,6 +4,7 @@ CREATE TABLE "history" (
     "lane_date" TEXT NOT NULL,
     "lane_time" TEXT NOT NULL,
     "call_time" TEXT,
+    "recall_time" TEXT,
     "send_time" TEXT,
     "exit_time" TEXT,
 

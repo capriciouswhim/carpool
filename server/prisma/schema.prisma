@@ -23,6 +23,7 @@ model history {
   lane_date   String
   lane_time   String
   call_time   String?
+  recall_time String?
   send_time   String?
   exit_time   String?
 

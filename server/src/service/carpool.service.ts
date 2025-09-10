@@ -27,24 +27,43 @@ export class CarpoolService {
         })
 
         const lane = history
-            .filter(h => h.call_time === null && h.send_time === null && h.exit_time === null)
-            .sort((a,b) => a.lane_time.localeCompare(b.lane_time))
+            .filter(h => h.call_time === null
+                      && h.recall_time === null 
+                      && h.send_time === null
+                      && h.exit_time === null)
+            .sort((a,b) => a.lane_time!.localeCompare(b.lane_time!))
 
         const call = history
-            .filter(h => h.call_time !== null && h.send_time === null && h.exit_time === null)
+            .filter(h => h.call_time !== null
+                      && h.recall_time === null 
+                      && h.send_time === null
+                      && h.exit_time === null)
             .sort((a,b) => a.call_time!.localeCompare(b.call_time!))
+
+        const recall = history
+            .filter(h => h.call_time !== null
+                      && h.recall_time !== null 
+                      && h.send_time === null
+                      && h.exit_time === null)
+            .sort((a,b) => a.recall_time!.localeCompare(b.recall_time!))
         
         const send = history
-            .filter(h => h.call_time !== null && h.send_time !== null && h.exit_time === null)
-            .sort((a,b) => a.call_time!.localeCompare(b.call_time!))
+            .filter(h => h.call_time !== null
+                      && h.recall_time !== null 
+                      && h.send_time !== null
+                      && h.exit_time === null)
+            .sort((a,b) => a.send_time!.localeCompare(b.send_time!))
     
         const exit = history
-            .filter(h => h.call_time !== null && h.send_time !== null && h.exit_time !== null)
-            .sort((a,b) => a.exit_time!.localeCompare(b.exit_time!));
+            .filter(h => h.call_time !== null
+                      && h.recall_time !== null 
+                      && h.send_time !== null
+                      && h.exit_time !== null)
+            .sort((a,b) => a.exit_time!.localeCompare(b.exit_time!))
 
         const callImmediate = await this.getOptionCallImmediate()
 
-        return { lane, call, send, exit, callImmediate }
+        return { lane, call, recall, send, exit, callImmediate }
     }
 
     // Remove all numbers from this day
@@ -123,20 +142,35 @@ export class CarpoolService {
         const now = new Date()
         const today_date = Util.formatDate(now)
         const call_time = Util.formatTime(now)
+
+        const dbRecord = await this.db.history.findUniqueOrThrow({
+            where: {
+                pool_number_lane_date: {
+                    pool_number: poolNumber,
+                    lane_date: today_date
+                }
+            }
+        })
+
+        let payload
+        if(dbRecord.call_time) {
+            payload = {
+                recall_time: call_time
+            }
+        } else {
+            payload = {
+                call_time
+            }
+        }
         
         await this.db.history.update({
             where: {
                 pool_number_lane_date: {
                     pool_number: poolNumber,
                     lane_date: today_date
-                },
-                call_time     :null,
-                send_time     :null,
-                exit_time     :null
+                }
             },
-            data: {
-                call_time
-            }
+            data: payload
         })
     }
 
@@ -154,7 +188,6 @@ export class CarpoolService {
                 exit_time     :null
             },
             orderBy: {
-                lane_date: 'asc',
                 lane_time: 'asc'
             },
             take: n            
