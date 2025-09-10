@@ -7,7 +7,7 @@ export class CarpoolService {
 
     // Get current state of call immediate option
     async getOptionCallImmediate() {
-        const result = await this.db.flags.findUnique({
+        const result = await this.db.flag.findUnique({
             where: {
                 name: 'callImmediate'
             }
@@ -202,7 +202,7 @@ export class CarpoolService {
             value
         }
         
-        await this.db.flags.upsert({
+        await this.db.flag.upsert({
             where: {
                 name: 'callImmediate'
             },

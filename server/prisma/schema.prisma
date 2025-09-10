@@ -29,7 +29,7 @@ model history {
   @@id([pool_number, lane_date])
 }
 
-model Flags {
+model flag {
   name  String  @id
   value Boolean
 }

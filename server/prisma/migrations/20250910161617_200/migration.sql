@@ -11,7 +11,7 @@ CREATE TABLE "history" (
 );
 
 -- CreateTable
-CREATE TABLE "Flags" (
+CREATE TABLE "flag" (
     "name" TEXT NOT NULL PRIMARY KEY,
     "value" BOOLEAN NOT NULL
 );

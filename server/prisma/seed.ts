@@ -9,7 +9,7 @@ async function main() {
         value: false
     }
 
-    await db.flags.upsert({
+    await db.flag.upsert({
         where: { name: 'callImmediate' },
         create: payload,
         update: payload
