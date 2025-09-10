@@ -2,6 +2,7 @@ import "@tsed/platform-log-request"; // remove this import if you don&#x27;t wan
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
+import "@tsed/passport";
 
 import { join } from "node:path";
 

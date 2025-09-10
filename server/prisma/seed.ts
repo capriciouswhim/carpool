@@ -2,15 +2,15 @@ import { PrismaClient } from '../generated/prisma'
 const db = new PrismaClient()
 
 async function main() {
-    console.log("Seed paused flag as 'false'.")
+    console.log("Seed callImmediate flag as 'false'.")
 
     const payload = {
-        name: 'paused',
+        name: 'callImmediate',
         value: false
     }
 
     await db.flags.upsert({
-        where: { name: 'paused' },
+        where: { name: 'callImmediate' },
         create: payload,
         update: payload
     })

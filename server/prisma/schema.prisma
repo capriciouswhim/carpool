@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator tsed {
+  provider = "tsed-prisma"
+}
+
+model history {
+  pool_number Int
+  lane_date   String
+  lane_time   String
+  call_time   String?
+  send_time   String?
+  exit_time   String?
+
+  @@id([pool_number, lane_date])
+}
+
+model Flags {
+  name  String  @id
+  value Boolean
+}

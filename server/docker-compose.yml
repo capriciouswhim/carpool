@@ -8,7 +8,7 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: api/server:latest
+    image: server/server:latest
     ports:
       - "8081:8081"
 
