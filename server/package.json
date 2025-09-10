@@ -1,7 +1,7 @@
 {
   "name": "carpool-server",
   "version": "2.0.0",
-  "build": "2025-09-03T17:37:09.972Z",
+  "build": "2025-09-10T17:00:00.000Z",
   "license": "UNLICENSED",
   "scripts": {
     "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",

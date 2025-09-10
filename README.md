@@ -2,25 +2,25 @@
 
 git clone https://github.com/capriciouswhim/carpool.git carpool-prod
 
-## API
+## SERVER
 
-The API must be built for the deployment architecture,
+The server must be built for the deployment architecture,
 particularly in regards to the Prisma client.
 
 ```
-pushd api
+pushd server
 yarn install
 yarn prisma generate
 yarn prisma migrate deploy
 popd
 ```
 
-## WEB
+## CLIENT
 
-The WEB deployment folder must be built.
+The CLIENT deployment folder must be built.
 
 ```
-pushd web
+pushd client
 yarn install
 yarn build
 popd
@@ -28,7 +28,7 @@ popd
 
 ## SYSTEMD
 
-A **systemd** service file is included to launch the API.
+A **systemd** service file is included to launch the server.
 We link to it from the default.target.wants folder.
 
 ``` sh
@@ -37,7 +37,7 @@ sudo ln -s carpool.service /etc/systemd/system/default.target.wants/carpool.serv
 sudo systemctl daemon-reload
 ```
 
-## WEB
+## NGINX
 
 A **nginx** configuration file is included to host the
 web site and reverse proxy API calls.  We link to it from
@@ -47,7 +47,7 @@ This file will need to be edited to point to SSL certificates.
 
 ``` sh
 sudo ln -s carpool.nginx /etc/nginx/sites-enabled/carpool.nginx
-sudo ln -s $HOME/carpool-prod/web/dist/carpool-web/browser /var/www/html/carpool
+sudo ln -s $HOME/carpool-prod/client/dist/carpool-client/browser /var/www/html/carpool
 ```
 
 ## SHUTDOWN
