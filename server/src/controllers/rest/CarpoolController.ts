@@ -1,6 +1,6 @@
 import { Controller } from "@tsed/di";
 import { PathParams, QueryParams } from "@tsed/platform-params";
-import { Delete, Get, Patch, Put } from "@tsed/schema";
+import { Delete, Get, Patch, Put, Tags } from "@tsed/schema";
 import { CarpoolResponse } from "src/model/carpool-response.model.js";
 import { CarpoolService } from "src/service/carpool.service.js";
 
@@ -10,6 +10,7 @@ export class CarpoolController {
 
     // Get complete current state
     @Get('/')
+    @Tags("mainline")
     async get(): Promise<CarpoolResponse> {
         return this.carpoolService.get()
     }
@@ -26,6 +27,7 @@ export class CarpoolController {
 
     // Remove all numbers from this day
     @Delete('/reset')
+    @Tags("undo")
     async reset(): Promise<CarpoolResponse> {
         await this.carpoolService.reset()
         return this.Respond()
@@ -33,6 +35,7 @@ export class CarpoolController {
 
     // Remove all numbers not called
     @Delete('/')
+    @Tags("undo")
     async resetLane(): Promise<CarpoolResponse> {
         await this.carpoolService.resetLane()
         return this.Respond()
@@ -40,6 +43,7 @@ export class CarpoolController {
 
     // Lane adds number
     @Put('/:poolNumber')
+    @Tags("mainline")
     async laneAdd(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
         await this.carpoolService.laneAdd(poolNumber)
         return this.Respond()
@@ -47,6 +51,7 @@ export class CarpoolController {
 
     // Lane removes number not called
     @Delete('/:poolNumber')
+    @Tags("undo")
     async laneDel(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
         await this.carpoolService.laneDel(poolNumber)
         return this.Respond()
@@ -54,6 +59,7 @@ export class CarpoolController {
 
     // Door calls number
     @Patch('/:poolNumber/call')
+    @Tags("mainline")
     async doorCallOne(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
         await this.carpoolService.doorCallOne(poolNumber)
         return this.Respond()
@@ -61,6 +67,7 @@ export class CarpoolController {
 
     // Door calls next N numbers
     @Patch('/call')
+    @Tags("feature")
     async doorCallMany(@QueryParams("n") n: number): Promise<CarpoolResponse> {
         await this.carpoolService.doorCallMany(n)
         return this.Respond()
@@ -68,6 +75,7 @@ export class CarpoolController {
 
     // Door calls all numbers
     @Patch('/call/all')
+    @Tags("feature")
     async doorCallAll(): Promise<CarpoolResponse> {
         await this.carpoolService.doorCallAll()
         return this.Respond()
@@ -75,6 +83,7 @@ export class CarpoolController {
 
     // Door wants new numbers called immediately
     @Put('/option/callImmediate')
+    @Tags("options")
     async setOptionCallImmediate(@QueryParams("option") value: boolean): Promise<CarpoolResponse> {
         await this.carpoolService.setOptionCallImmediate(value)
         return this.Respond()
@@ -82,6 +91,7 @@ export class CarpoolController {
 
     // Room sends number to door
     @Patch('/:poolNumber/send')
+    @Tags("mainline")
     async roomSend(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
         await this.carpoolService.roomSend(poolNumber)
         return this.Respond()
@@ -89,6 +99,7 @@ export class CarpoolController {
 
     // Door exits number
     @Patch('/:poolNumber/exit')
+    @Tags("mainline")
     async doorExit(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
         await this.carpoolService.doorExit(poolNumber)
         return this.Respond()
