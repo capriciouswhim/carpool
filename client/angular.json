@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "carpool-web": {
+    "carpool-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -64,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "carpool-web:build:production"
+              "buildTarget": "carpool-client:build:production"
             },
             "development": {
-              "buildTarget": "carpool-web:build:development"
+              "buildTarget": "carpool-client:build:development"
             }
           },
           "defaultConfiguration": "development"
