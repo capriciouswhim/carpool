@@ -1,0 +1,10 @@
+<div class="superior">
+    <div class="content">
+        @for(lane of lane$ | async; track lane.pool_number) {
+            <car-pool-number [poolNumber]="lane" state="LANE" (click)="onClick($event)"></car-pool-number>
+        }
+    </div>
+</div>
+<div class="inferior">
+    <car-keypad></car-keypad>
+</div>

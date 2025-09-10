@@ -1,0 +1,21 @@
+<div class="keypad">
+    <mat-form-field class="wide" appearance="outline">
+        <mat-label>Carpool Number</mat-label>
+        <input matInput [(ngModel)]="value" (keydown)="onKeydown($event)">
+    </mat-form-field>
+    <button matButton="filled"   (click)="onButton(7)"  >7</button>
+    <button matButton="filled"   (click)="onButton(8)"  >8</button>
+    <button matButton="filled"   (click)="onButton(9)"  >9</button>
+    <button matButton="filled"   (click)="onButton(4)"  >4</button>
+    <button matButton="filled"   (click)="onButton(5)"  >5</button>
+    <button matButton="filled"   (click)="onButton(6)"  >6</button>
+    <button matButton="filled"   (click)="onButton(1)"  >1</button>
+    <button matButton="filled"   (click)="onButton(2)"  >2</button>
+    <button matButton="filled"   (click)="onButton(3)"  >3</button>
+    <button matButton="outlined" (click)="onButton('b')">⌫</button>
+    <button matButton="filled"   (click)="onButton(0)"  >0</button>
+    <button matButton="outlined" (click)="onButton('e')" (dblclick)="onClear()">⏎</button>
+    <!-- <div class="wide">
+        <mat-slide-toggle [checked]="paused$ | async" (toggleChange)="onToggle($event)">&nbsp;Pause Queue</mat-slide-toggle>
+    </div> -->
+</div>

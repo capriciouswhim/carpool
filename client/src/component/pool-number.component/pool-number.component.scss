@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+.poolNumber {
+    width: 3cm; height: 2cm;
+    border: .15cm solid;
+    border-radius: 1cm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: xx-large;
+    border-radius: 0.75cm;
+    border-color: hwb(0 33% 66%);
+    background-color: hwb(0 7.5% 85%);
+}
+
+.lane {
+    border-color: hwb(0 33% 66%);
+    background-color: hwb(0 7.5% 85%);
+}
+
+.call {
+    border-color: hwb(110 0% 0%);
+    background-color: hwb(110 7.5% 85%);
+}
+
+.recall {
+    border-color: hwb(30 0% 0%);
+    background-color: hwb(30 7.5% 85%);
+}
+
+.send {
+    border-color: hwb(170 0% 0%);
+    background-color: hwb(170 7.5% 85%);
+}
+
+.exit {
+    border-color: hwb(190 0% 0%);
+    background-color: hwb(190 7.5% 85%);
+}
+
+.stale {
+    display: none
+}
