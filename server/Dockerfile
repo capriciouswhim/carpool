@@ -15,9 +15,7 @@
 ###############################################################################
 ###############################################################################
 
-ARG NODE_VERSION=20.11.0
-
-FROM node:${NODE_VERSION}-alpine AS build
+FROM node:lts-alpine AS build
 WORKDIR /opt
 
 COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
@@ -25,10 +23,12 @@ COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json 
 RUN yarn install --pure-lockfile
 
 COPY ./src ./src
+COPY ./prisma ./prisma
 
+RUN yarn prisma generate
 RUN yarn build
 
-FROM node:${NODE_VERSION}-alpine AS runtime
+FROM node:lts-alpine AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
