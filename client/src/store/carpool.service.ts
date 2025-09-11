@@ -6,16 +6,16 @@ import { Store } from "@ngrx/store";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolService {
-    private readonly apiUrl = this.getAppUrl()
+    private readonly apiUrl = this.getAPIurl()
     private readonly audioHorn = new Audio('horn.mp3')
     private readonly store = inject(Store)
 
-    getAppUrl() {
+    getAPIurl() {
         switch(window.location.hostname) {
             case 'localhost':
             case '127.0.0.1':
             case '0.0.0.0':
-                return `${window.location.protocol}//${window.location.hostname}:8083/rest/carpool`
+                return `${window.location.protocol}//${window.location.hostname}:8081/rest/carpool`
             default:
                 return `${window.location.protocol}//${window.location.host}/api`
         }
@@ -51,7 +51,10 @@ export class CarpoolService {
     }
 
 
-    dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', url: string) => new Observable<CarpoolResponse>(o => {
+    dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', uri: string) => new Observable<CarpoolResponse>(o => {
+        const APIurl = this.getAPIurl()
+        const url = `${APIurl}${uri}`
+        console.dir([method, url])
         axios
             .request<CarpoolResponse>({
                 method,
