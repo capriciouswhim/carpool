@@ -18,12 +18,12 @@
 FROM node:lts-alpine AS build
 WORKDIR /opt
 
-COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
+COPY ./server/package.json ./server/yarn.lock ./server/tsconfig.json ./server/tsconfig.base.json ./server/tsconfig.node.json ./server/tsconfig.spec.json ./server/.barrels.json ./server/.swcrc ./
 
 RUN yarn install --pure-lockfile
 
-COPY ./src ./src
-COPY ./prisma ./prisma
+COPY ./server/src ./src
+COPY ./server/prisma ./prisma
 
 RUN yarn prisma generate
 RUN yarn build
@@ -39,7 +39,7 @@ COPY --from=build /opt .
 
 RUN yarn install --pure-lockfile --production
 
-COPY . .
+COPY ./server/.env ./server/processes.config.cjs .
 
 EXPOSE 8081
 ENV PORT 8081

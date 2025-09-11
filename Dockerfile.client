@@ -1,0 +1,27 @@
+###############################################################################
+###############################################################################
+##                                                                           ##
+## description     : Dockerfile for Angular Application                      ##
+## author          : D Franz                                                 ##
+## date            : 2025-09-11                                              ##
+## version         : 1.0                                                     ##
+##                                                                           ##
+###############################################################################
+###############################################################################
+
+FROM node:lts-alpine AS client-build
+
+WORKDIR /opt/server
+COPY ./server/src/model ./src/model
+
+WORKDIR /opt/client
+COPY ./client/angular.json ./client/package.json ./client/yarn.lock ./client/tsconfig.json ./client/tsconfig.app.json ./client/tsconfig.spec.json ./
+RUN yarn install --pure-lockfile
+
+COPY ./client/src ./src
+
+RUN yarn build
+
+FROM docker.io/library/nginx:mainline-alpine-slim AS client-runtime
+COPY --from=client-build /opt/client/dist/carpool-client/browser/* /usr/share/nginx/html
+EXPOSE 80

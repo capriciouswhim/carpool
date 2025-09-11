@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.server
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: carpool/server:latest
+    ports:
+      - "8081:8081"
+  client:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.client
+    image: carpool/client:latest
+    ports:
+      - "8080:80"
+
