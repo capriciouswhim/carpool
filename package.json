@@ -5,7 +5,15 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "semver": "tsx semver.ts"
+    "semver": "tsx semver.ts",
+    "docker:build:server": "podman build -t carpool/server:latest -f Dockerfile.server .",
+    "docker:build:client": "podman build -t carpool/client:latest -f Dockerfile.client .",
+    "docker:build": "yarn docker:build:server && yarn docker:build:client",
+    "docker:start:server": "podman run -d -p 8081:8081 --name carpool-server carpool/server:latest",
+    "docker:start:client": "podman run -d -p 8081:8081 --name carpool-client carpool/client:latest",
+    "docker:start": "yarn docker:start:server && yarn docker:start:client",
+    "docker:deploy": "yarn docker:build && yarn docker:start",
+    "docker:stop": "podman stop carpool-server && podman stop carpool-client"
   },
   "dependencies": {
     "chalk": "^5.6.0"
