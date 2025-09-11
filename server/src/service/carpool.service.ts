@@ -1,6 +1,6 @@
-import { PrismaClient } from "generated/prisma/index.js";
-import { CarpoolResponse } from "src/model/carpool-response.model.js";
-import { Util } from "src/util.js";
+import { PrismaClient } from "../../generated/prisma/client.js";
+import { CarpoolResponse } from "../model/carpool-response.model.js";
+import { Util } from "../util.js";
 
 export class CarpoolService {
     db = new PrismaClient()

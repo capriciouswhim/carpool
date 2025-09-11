@@ -1,8 +1,8 @@
 import { Controller } from "@tsed/di";
 import { PathParams, QueryParams } from "@tsed/platform-params";
 import { Delete, Get, Patch, Put, Tags } from "@tsed/schema";
-import { CarpoolResponse } from "src/model/carpool-response.model.js";
-import { CarpoolService } from "src/service/carpool.service.js";
+import { CarpoolResponse } from "../../model/carpool-response.model.js";
+import { CarpoolService } from "../../service/carpool.service.js";
 
 @Controller("/carpool")
 export class CarpoolController {
