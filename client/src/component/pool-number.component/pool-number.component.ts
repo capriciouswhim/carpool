@@ -1,7 +1,8 @@
-import { Component, input, output } from '@angular/core';
-import { PoolNumber } from '../../model';
+import { Component, input, InputSignal, output } from '@angular/core';
+import { PoolNumber, TypedPoolNumber } from '../../model';
+import { Util } from '../../util';
 
-type NumberState = 'LANE' | 'CALL' | 'RECALL' | 'SEND' | 'EXIT'
+export type PoolNumberState = 'LANE' | 'CALL' | 'RECALL' | 'SEND' | 'EXIT' | 'GONE'
 
 @Component({
   selector: 'car-pool-number',
@@ -10,17 +11,20 @@ type NumberState = 'LANE' | 'CALL' | 'RECALL' | 'SEND' | 'EXIT'
   styleUrl: './pool-number.component.scss'
 })
 export class PoolNumberComponent {
-  poolNumber = input.required<PoolNumber>()
-  state = input.required<NumberState>()
-  click = output<PoolNumber>()
+  poolNumber = input.required<TypedPoolNumber>()
+  click = output<TypedPoolNumber>()
 
-  getClass = () => ({
-    lane: this.state() === 'LANE',
-    call: this.state() === 'CALL',
-    recall: this.state() === 'RECALL',
-    send: this.state() === 'SEND',
-    exit: this.state() === 'EXIT',
-  })
+  getClass = (poolNumberSignal: InputSignal<TypedPoolNumber>) => {
+    const poolNumber = poolNumberSignal()
+    switch(poolNumberSignal().state) {
+      case 'LANE': return { lane: true }
+      case 'CALL': return { call: true }
+      case 'RECALL': return { recall: true }
+      case 'SEND': return { send: true }
+      case 'EXIT': return { exit: true }
+      case 'GONE': return { gone: true }
+    }
+  }
 
   onClick() {
     this.click.emit(this.poolNumber());

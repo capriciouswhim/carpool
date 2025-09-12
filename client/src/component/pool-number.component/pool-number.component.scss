@@ -10,8 +10,10 @@
     cursor: pointer;
     font-size: xx-large;
     border-radius: 0.75cm;
-    border-color: hwb(0 33% 66%);
-    background-color: hwb(0 7.5% 85%);
+}
+
+.number {
+    display: inline;    
 }
 
 .lane {
@@ -37,6 +39,11 @@
 .exit {
     border-color: hwb(190 0% 0%);
     background-color: hwb(190 7.5% 85%);
+}
+
+.gone {
+    border-color: hwb(0 33% 66%);
+    background-color: hwb(0 7.5% 85%);    
 }
 
 .stale {

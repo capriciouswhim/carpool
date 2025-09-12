@@ -15,15 +15,29 @@ export class CarpoolService {
             case 'localhost':
             case '127.0.0.1':
             case '0.0.0.0':
-                return `${window.location.protocol}//${window.location.hostname}:8081/rest/carpool`
+                switch(window.location.port) {
+                    case '8080':
+                        // Local Docker
+                        return `${window.location.protocol}//${window.location.hostname}:8081/rest/carpool`
+                    case '4200':
+                    default:
+                        // Local Development
+                        return `${window.location.protocol}//${window.location.hostname}:8083/rest/carpool`
+                }
             default:
+                // Internet Production
                 return `${window.location.protocol}//${window.location.host}/api`
         }
     }
 
     handleResponse(o: Subscriber<CarpoolResponse>, response: AxiosResponse<CarpoolResponse, any>) {
-        o.next(response.data)
-        o.complete()
+        if(response.status >= 200 && response.status < 300) {
+            o.next(response.data)
+            o.complete()
+        } else {
+            const err: ApiException = { reason: `${response.status} ${response.statusText}` }
+            o.error(err)
+        }
     }
 
     handleCatch(o: Subscriber<CarpoolResponse>, reason: any) {
@@ -54,11 +68,13 @@ export class CarpoolService {
     dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', uri: string) => new Observable<CarpoolResponse>(o => {
         const APIurl = this.getAPIurl()
         const url = `${APIurl}${uri}`
-        console.dir([method, url])
+        console.dir([method, url]);
+
         axios
             .request<CarpoolResponse>({
                 method,
-                url
+                url,
+                validateStatus: () => true // all statuses are good
             })
             .then(response => this.handleResponse(o, response))
             .catch(reason => this.handleCatch(o, reason))
@@ -69,10 +85,11 @@ export class CarpoolService {
     resetLane = () => this.dispatch('DELETE', '/')
     laneAdd = (poolNumber: number) => this.dispatch('PUT', `/${poolNumber}`)
     laneDel = (poolNumber: number) => this.dispatch('DELETE', `/${poolNumber}`)
-    doorCallOne = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}`)
+    doorCallOne = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/call`)
     doorCallMany = (num: number) => this.dispatch('PATCH', `/call?n=${num}`)
     doorCallAll = () => this.dispatch('PATCH', `/call/all`)
     setOptionCallImmediate = (option: boolean) => this.dispatch('PUT', `/option/callImmediate?option=${option}`)
-    roomSend = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}`)
-    doorExit = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}`)
+    roomSend = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/send`)
+    doorExit = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/exit`)
+    walkGone = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/gone`)
 }

@@ -4,4 +4,5 @@ export class PoolNumber {
   call_time     :string | null  = null
   send_time     :string | null  = null
   exit_time     :string | null  = null
+  gone_time     :string | null  = null
 }

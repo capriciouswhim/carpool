@@ -7,6 +7,7 @@ CREATE TABLE "history" (
     "recall_time" TEXT,
     "send_time" TEXT,
     "exit_time" TEXT,
+    "gone_time" TEXT,
 
     PRIMARY KEY ("pool_number", "lane_date")
 );

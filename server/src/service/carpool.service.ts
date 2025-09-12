@@ -30,40 +30,43 @@ export class CarpoolService {
             .filter(h => h.call_time === null
                       && h.recall_time === null 
                       && h.send_time === null
-                      && h.exit_time === null)
+                      && h.exit_time === null
+                      && h.gone_time === null)
             .sort((a,b) => a.lane_time!.localeCompare(b.lane_time!))
 
         const call = history
             .filter(h => h.call_time !== null
                       && h.recall_time === null 
                       && h.send_time === null
-                      && h.exit_time === null)
-            .sort((a,b) => a.call_time!.localeCompare(b.call_time!))
+                      && h.exit_time === null
+                      && h.gone_time === null)
+            .sort((a,b) => a.call_time!.localeCompare(b.lane_time!))
 
         const recall = history
-            .filter(h => h.call_time !== null
-                      && h.recall_time !== null 
+            .filter(h => h.recall_time !== null 
                       && h.send_time === null
-                      && h.exit_time === null)
-            .sort((a,b) => a.recall_time!.localeCompare(b.recall_time!))
+                      && h.exit_time === null
+                      && h.gone_time === null)
+            .sort((a,b) => a.recall_time!.localeCompare(b.lane_time!))
         
         const send = history
-            .filter(h => h.call_time !== null
-                      && h.recall_time !== null 
-                      && h.send_time !== null
-                      && h.exit_time === null)
-            .sort((a,b) => a.send_time!.localeCompare(b.send_time!))
+            .filter(h => h.send_time !== null
+                      && h.exit_time === null
+                      && h.gone_time === null)
+            .sort((a,b) => a.send_time!.localeCompare(b.lane_time!))
     
         const exit = history
-            .filter(h => h.call_time !== null
-                      && h.recall_time !== null 
-                      && h.send_time !== null
-                      && h.exit_time !== null)
-            .sort((a,b) => a.exit_time!.localeCompare(b.exit_time!))
+            .filter(h => h.exit_time !== null
+                      && h.gone_time === null)
+            .sort((a,b) => a.exit_time!.localeCompare(b.lane_time!))
+
+        const gone = history
+            .filter(h => h.gone_time !== null)
+            .sort((a,b) => a.gone_time!.localeCompare(b.lane_time!))
 
         const callImmediate = await this.getOptionCallImmediate()
 
-        return { lane, call, recall, send, exit, callImmediate }
+        return { lane, call, recall, send, exit, gone, callImmediate }
     }
 
     // Remove all numbers from this day
@@ -120,19 +123,18 @@ export class CarpoolService {
         })
     }
 
-    // Lane removes number not called
+    // Lane removes number (not yet called)
     async laneDel(poolNumber: number) {
         const today_date = Util.formatDate(new Date())
 
-        await this.db.history.delete({
+        await this.db.history.deleteMany({
             where: {
-                pool_number_lane_date: {
-                    pool_number: poolNumber,
-                    lane_date: today_date,
-                },
-                call_time     :null,
-                send_time     :null,
-                exit_time     :null                
+                pool_number: poolNumber,
+                lane_date: today_date,
+                call_time: null,
+                send_time: null,
+                exit_time: null,
+                gone_time: null             
             }
         })
     }
@@ -284,4 +286,24 @@ export class CarpoolService {
             }
         })
     }
+
+    // Walker "gones" number
+    async walkGone(poolNumber: number) {
+        const now = new Date()
+        const today_date = Util.formatDate(now)
+        const gone_time = Util.formatTime(now)
+        
+        await this.db.history.update({
+            where: {
+                pool_number_lane_date: {
+                    pool_number: poolNumber,
+                    lane_date: today_date
+                },
+                gone_time     :null
+            },
+            data: {
+                gone_time
+            }
+        })
+    }    
 }

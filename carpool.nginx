@@ -2,7 +2,7 @@ server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
-        # server-name carpool.artsyteachy.com;
+	server-name carpool.artsyteachy.com;
 
 	location / {
 		return 301 https://$host$request_uri;
@@ -12,19 +12,15 @@ server {
 server {
 	listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
-
-	root /var/www/html/carpool;
 	
-	location / {
-		try_files $uri $uri/ /index.html;
-		#rewrite ^ /index.html break;
-	}
-
-	location /assets/ {
-	}
-
+	server-name carpool.artsyteachy.com;
+	
 	location /api/ {
-		proxy_pass http://127.0.0.1:8083/rest/carpool/;
+		proxy_pass http://localhost:8081/rest/carpool/;
+	}
+
+	location / {
+		proxy_pass http://localhot:8080/
 	}
 
 	# Disable caching with HTTP headers

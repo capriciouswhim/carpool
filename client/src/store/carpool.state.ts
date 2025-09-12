@@ -13,5 +13,6 @@ export const carpoolInitialState: CarpoolState = {
   recall: [],
   send: [],
   exit: [],
+  gone: [],
   callImmediate: false
 }

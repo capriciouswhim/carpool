@@ -26,6 +26,7 @@ model history {
   recall_time String?
   send_time   String?
   exit_time   String?
+  gone_time   String?
 
   @@id([pool_number, lane_date])
 }

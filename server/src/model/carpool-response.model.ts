@@ -6,5 +6,6 @@ export interface CarpoolResponse {
     recall        :PoolNumber[],
     send          :PoolNumber[],
     exit          :PoolNumber[],
+    gone          :PoolNumber[],
     callImmediate :boolean
 }

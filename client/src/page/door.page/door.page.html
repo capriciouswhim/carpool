@@ -1,1 +1,7 @@
-<p>door.page works!</p>
+<div class="superior">
+    <div class="content">
+        @for(poolNumber of poolNumbers$ | async; track poolNumber.pool_number) {
+            <car-pool-number [poolNumber]="poolNumber" (dblclick)="onDblClick(poolNumber)"></car-pool-number>
+        }
+    </div>
+</div>
