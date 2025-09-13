@@ -1,13 +1,19 @@
-import { CarpoolResponse } from "../model"
+import { CarpoolResponse, TypedPoolNumber } from "../model"
+import { carpoolReducer } from "./carpool.reducer"
 
 export const carpoolSource = 'carpool'
 
 export interface CarpoolState extends CarpoolResponse {
-  now: Date
+  lane: TypedPoolNumber[],
+  call: TypedPoolNumber[],
+  recall: TypedPoolNumber[],
+  send: TypedPoolNumber[],
+  exit: TypedPoolNumber[],
+  gone: TypedPoolNumber[],
+  callImmediate: boolean
 }
 
 export const carpoolInitialState: CarpoolState = {
-  now: new Date(),
   lane: [],
   call: [],
   recall: [],

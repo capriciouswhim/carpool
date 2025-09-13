@@ -1,3 +1,5 @@
-@for(call of called$ | async; track call) {
-    <car-pool-number [poolNumber]="call" (dblclick)="onDblClick(call)"></car-pool-number>
+<div class="superior">
+@for(poolNumber of poolNumbers$ | async; track poolNumber.pool_number) {
+    <car-pool-number [poolNumber]="poolNumber" (dblclick)="onDblClick(poolNumber)"></car-pool-number>
 }
+</div>

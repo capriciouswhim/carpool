@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { KeypadComponent, PoolNumberComponent } from '../../component';
+import { DispatchComponent, PoolNumberComponent } from '../../component';
 import { carpoolAction, selectAll } from '../../store';
-import { PoolNumber } from '../../model';
+import { TypedPoolNumber } from '../../model';
 
 @Component({
   selector: 'car-door-page',
-  imports: [AsyncPipe, PoolNumberComponent],
+  imports: [AsyncPipe, DispatchComponent, PoolNumberComponent],
   templateUrl: './door.page.html',
   styleUrl: './door.page.scss'
 })
@@ -15,8 +15,18 @@ export class DoorPage {
   store = inject(Store)
   poolNumbers$ = this.store.select(selectAll)
 
-  onDblClick(poolNumberObj: PoolNumber) {
-      const poolNumber = poolNumberObj.pool_number
-      this.store.dispatch(carpoolAction.doorCallOne({ poolNumber }))
+  onDblClick(poolNumber: TypedPoolNumber) {
+      switch(poolNumber.state) {
+        case 'LANE':
+          this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
+          break;
+        case 'CALL':
+        case 'RECALL':
+          this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
+          break;
+        case 'SEND':
+          this.store.dispatch(carpoolAction.doorExit({ poolNumber: poolNumber.pool_number }))
+          break;
+      }
   }
 }

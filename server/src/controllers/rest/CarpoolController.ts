@@ -104,4 +104,12 @@ export class CarpoolController {
         await this.carpoolService.doorExit(poolNumber)
         return this.Respond()
     }
+
+    // Escort dispatches number
+    @Patch('/:poolNumber/gone')
+    @Tags("mainline")
+    async escortGone(@PathParams("poolNumber") poolNumber: number): Promise<CarpoolResponse> {
+        await this.carpoolService.escortGone(poolNumber)
+        return this.Respond()
+    }
 }

@@ -91,5 +91,5 @@ export class CarpoolService {
     setOptionCallImmediate = (option: boolean) => this.dispatch('PUT', `/option/callImmediate?option=${option}`)
     roomSend = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/send`)
     doorExit = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/exit`)
-    walkGone = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/gone`)
+    escortGone = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/gone`)
 }

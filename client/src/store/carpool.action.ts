@@ -49,5 +49,10 @@ export const carpoolAction = createActionGroup({
         doorExit: props<{ poolNumber: number }>(),
         doorExit_success: props<CarpoolResponse>(),
         doorExit_failure: props<ApiException>(),
+
+        escortGone: props<{ poolNumber: number }>(),
+        escortGone_success: props<CarpoolResponse>(),
+        escortGone_failure: props<ApiException>(),
+
     }
 })

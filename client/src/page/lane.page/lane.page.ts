@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { KeypadComponent, PoolNumberComponent } from '../../component';
 import { carpoolAction, selectAll } from '../../store';
-import { PoolNumber } from '../../model';
+import { TypedPoolNumber } from '../../model';
 
 @Component({
   selector: 'car-lane-page',
@@ -15,8 +15,14 @@ export class LanePage {
   store = inject(Store)
   poolNumbers$ = this.store.select(selectAll)
 
-  onDblClick(poolNumberObj: PoolNumber) {
-      const poolNumber = poolNumberObj.pool_number
-      this.store.dispatch(carpoolAction.laneDel({ poolNumber }))
+  onDblClick(poolNumber: TypedPoolNumber) {
+      switch(poolNumber.state) {
+        case 'LANE':
+          this.store.dispatch(carpoolAction.laneDel({ poolNumber: poolNumber.pool_number }))
+          break;
+        case 'SEND':
+          this.store.dispatch(carpoolAction.escortGone({ poolNumber: poolNumber.pool_number }))
+          break;
+      }
   }
 }

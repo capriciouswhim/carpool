@@ -287,8 +287,8 @@ export class CarpoolService {
         })
     }
 
-    // Walker "gones" number
-    async walkGone(poolNumber: number) {
+    // Escort dispatches number
+    async escortGone(poolNumber: number) {
         const now = new Date()
         const today_date = Util.formatDate(now)
         const gone_time = Util.formatTime(now)

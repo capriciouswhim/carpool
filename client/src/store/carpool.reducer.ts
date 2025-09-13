@@ -1,7 +1,7 @@
 import { ActionCreatorProps, createReducer, on } from "@ngrx/store";
 import { carpoolInitialState, CarpoolState } from "./carpool.state";
 import { carpoolAction } from "./carpool.action";
-import { CarpoolResponse } from "../model";
+import { CarpoolResponse, TypedPoolNumber } from "../model";
 
 export const carpoolReducer = createReducer(
   carpoolInitialState,
@@ -21,6 +21,14 @@ export const carpoolReducer = createReducer(
 function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolState {
   return {
     ...state,
-    ...action
+    ...{
+      lane: action.lane.map<TypedPoolNumber>(l => ({...l, state: 'LANE', sort: l.lane_time})),
+      call: action.call.map<TypedPoolNumber>(l => ({...l, state: 'CALL', sort: l.lane_time})),
+      recall: action.recall.map<TypedPoolNumber>(l => ({...l, state: 'RECALL', sort: l.lane_time})),
+      send: action.send.map<TypedPoolNumber>(l => ({...l, state: 'SEND', sort: l.lane_time})),
+      exit: action.exit.map<TypedPoolNumber>(l => ({...l, state: 'EXIT', sort: l.lane_time})),
+      gone: action.gone.map<TypedPoolNumber>(l => ({...l, state: 'GONE', sort: l.lane_time})),
+      callImmediate: action.callImmediate
+    }
   }
 }

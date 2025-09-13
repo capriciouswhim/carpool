@@ -97,4 +97,13 @@ export class CarpoolEffect {
             catchError((apiException: ApiException) => of(carpoolAction.doorExit_failure(apiException)))
         )))
     )
+
+    public escortGone$ = createEffect(() => this.actions$.pipe(
+        ofType(carpoolAction.escortGone),
+        exhaustMap(action => this.carpoolService.escortGone(action.poolNumber).pipe(
+            map(response => carpoolAction.escortGone_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.escortGone_failure(apiException)))
+        )))
+    )
+
 }

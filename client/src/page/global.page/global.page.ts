@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from "@angular/core";
-import { LanePage, DoorPage, RoomPage } from "../";
+import { LanePage, DoorPage, RoomPage, EscortPage } from "../";
 import { carpoolAction } from "../../store";
 import { Store } from "@ngrx/store";
 
 @Component({
-  imports: [DoorPage, LanePage, RoomPage ],
+  imports: [DoorPage, LanePage, RoomPage, EscortPage ],
   templateUrl: './global.page.html',
   styleUrl: './global.page.scss'
 })

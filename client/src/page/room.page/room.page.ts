@@ -1,7 +1,7 @@
 import { AsyncPipe } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { PoolNumberComponent } from "../../component";
-import { selectCalled } from "../../store/carpool.feature";
+import { selectAllCall } from "../../store/carpool.feature";
 import { PoolNumber } from "../../model";
 import { carpoolAction } from "../../store";
 import { Store } from "@ngrx/store";
@@ -14,10 +14,10 @@ import { Store } from "@ngrx/store";
 })
 export class RoomPage {
   store = inject(Store)
-  called$ = this.store.select(selectCalled);
-  
+  poolNumbers$ = this.store.select(selectAllCall)
+
   onDblClick(poolNumberObj: PoolNumber) {
-    const poolNumber = poolNumberObj.pool_number
-    this.store.dispatch(carpoolAction.roomSend({ poolNumber }))
+      const poolNumber = poolNumberObj.pool_number
+      this.store.dispatch(carpoolAction.doorExit({ poolNumber }))
   }
 }
