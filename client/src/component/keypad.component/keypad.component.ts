@@ -9,7 +9,6 @@ import { carpoolAction } from '../../store/carpool.action';
 
 
 @Component({
-  encapsulation: ViewEncapsulation.ShadowDom,
   selector: 'car-keypad',
   imports: [ FormsModule, MatButtonModule, MatInputModule, MatSlideToggleModule ],
   templateUrl: './keypad.component.html',
@@ -79,8 +78,4 @@ export class KeypadComponent {
       this.onDigit(keyValue);
     }
   }
-
-  // onToggle($event: any) {
-  //   this.store.dispatch(carpoolAction.togglePause());
-  // }
 }
