@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { PoolNumberComponent } from '../../component';
+import { DispatchComponent, PoolNumberComponent } from '../../component';
 import { carpoolAction, selectDoor } from '../../store';
 import { TypedPoolNumber } from '../../model';
 import { BasePage } from '../base.page/base.page';
 
 @Component({
   selector: 'car-door-page',
-  imports: [AsyncPipe, PoolNumberComponent],
+  imports: [ AsyncPipe, PoolNumberComponent, DispatchComponent ],
   templateUrl: './door.page.html',
   styleUrl: './door.page.scss'
 })

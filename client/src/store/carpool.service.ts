@@ -68,7 +68,7 @@ export class CarpoolService {
     dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', uri: string) => new Observable<CarpoolResponse>(o => {
         const APIurl = this.getAPIurl()
         const url = `${APIurl}${uri}`
-        console.dir([method, url]);
+        // console.dir([method, url]);
 
         axios
             .request<CarpoolResponse>({

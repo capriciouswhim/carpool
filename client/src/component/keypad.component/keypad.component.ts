@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
-// import { selectPaused } from '../../store/carpool.feature';
 import { carpoolAction } from '../../store/carpool.action';
 
 
