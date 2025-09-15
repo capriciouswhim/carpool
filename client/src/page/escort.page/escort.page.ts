@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { PoolNumberComponent } from '../../component';
-import { carpoolAction, selectExit } from '../../store';
+import { carpoolAction, selectEscort } from '../../store';
 import { TypedPoolNumber } from '../../model';
-import { selectAllExit } from '../../store/carpool.feature';
+import { BasePage } from '../base.page/base.page';
 
 @Component({
   selector: 'car-escort-page',
@@ -12,15 +12,14 @@ import { selectAllExit } from '../../store/carpool.feature';
   templateUrl: './escort.page.html',
   styleUrl: './escort.page.scss'
 })
-export class EscortPage {
-  store = inject(Store)
-  poolNumbers$ = this.store.select(selectAllExit)
+export class EscortPage extends BasePage {
+  poolNumbers$ = this.store.select(selectEscort)
 
-  onDblClick(poolNumber: TypedPoolNumber) {
-      switch(poolNumber.state) {
-        case 'EXIT':
-          this.store.dispatch(carpoolAction.escortGone({ poolNumber: poolNumber.pool_number }))
-          break;
-      }
+  onInvoke(poolNumber: TypedPoolNumber) {
+    switch (poolNumber.state) {
+      case 'EXIT':
+        this.store.dispatch(carpoolAction.escortGone({ poolNumber: poolNumber.pool_number }))
+        break;
+    }
   }
 }

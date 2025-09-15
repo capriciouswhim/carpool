@@ -1,26 +1,47 @@
-<div class="lane">
-    <div class="title">Lane</div>
+<!--
     <div class="content">
-        <car-lane-page></car-lane-page>
+        <car-lane-page [delegate]="true"></car-lane-page>
     </div>
 </div>
 <div class="door">
     <div class="title">Door</div>
     <div class="content">
-        <car-door-page></car-door-page>
+        <car-door-page [delegate]="true"></car-door-page>
     </div>
 </div>
 <div class="duo">
     <div class="room">
         <div class="title">Room</div>
         <div class="content">
-            <car-room-page></car-room-page>
+            <car-room-page [delegate]="true"></car-room-page>
         </div>
     </div>
     <div class="escort">
         <div class="title">Escort</div>
         <div class="content">
-            <car-escort-page></car-escort-page>
+            <car-escort-page [delegate]="true"></car-escort-page>
         </div>
+    </div>
+</div> -->
+
+ <div class="lane">
+    <div class="title">Lane</div>
+    <car-lane-page [delegate]="true"></car-lane-page>
+</div>
+
+<div class="door">
+    <div class="title">Door</div>
+    <car-door-page [delegate]="true"></car-door-page>
+</div>
+
+<div class="duo">
+    <div class="room">
+        <div class="title">Room</div>
+        <car-room-page [delegate]="true"></car-room-page>
+    </div>
+
+    <div class="escort">
+        <div class="title">Escort</div>
+        <car-escort-page [delegate]="true"></car-escort-page>
     </div>
 </div>

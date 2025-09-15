@@ -1,8 +1,5 @@
 import { Component, input, InputSignal, output } from '@angular/core';
-import { PoolNumber, TypedPoolNumber } from '../../model';
-import { Util } from '../../util';
-
-export type PoolNumberState = 'LANE' | 'CALL' | 'RECALL' | 'SEND' | 'EXIT' | 'GONE'
+import { TypedPoolNumber } from '../../model';
 
 @Component({
   selector: 'car-pool-number',
@@ -12,7 +9,7 @@ export type PoolNumberState = 'LANE' | 'CALL' | 'RECALL' | 'SEND' | 'EXIT' | 'GO
 })
 export class PoolNumberComponent {
   poolNumber = input.required<TypedPoolNumber>()
-  click = output<TypedPoolNumber>()
+  invoke = output<TypedPoolNumber>()
 
   getClass = (poolNumberSignal: InputSignal<TypedPoolNumber>) => {
     const poolNumber = poolNumberSignal()
@@ -26,7 +23,8 @@ export class PoolNumberComponent {
     }
   }
 
-  onClick() {
-    this.click.emit(this.poolNumber());
+  onDblClick($event: MouseEvent) {
+    $event.preventDefault()
+    this.invoke.emit(this.poolNumber());
   }
 }

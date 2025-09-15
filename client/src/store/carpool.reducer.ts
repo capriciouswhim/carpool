@@ -15,7 +15,8 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.doorCallAll_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.setOptionCallImmediate_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.roomSend_success,(s,a) => updateHistory(s,a)),
-    on(carpoolAction.doorExit_success,(s,a) => updateHistory(s,a))
+    on(carpoolAction.doorExit_success,(s,a) => updateHistory(s,a)),
+    on(carpoolAction.escortGone_success,(s,a) => updateHistory(s,a))
 )
 
 function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolState {

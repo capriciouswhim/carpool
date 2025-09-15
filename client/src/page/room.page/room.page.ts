@@ -1,10 +1,10 @@
 import { AsyncPipe } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { PoolNumberComponent } from "../../component";
-import { selectAllCall } from "../../store/carpool.feature";
 import { PoolNumber } from "../../model";
-import { carpoolAction } from "../../store";
+import { carpoolAction, selectRoom } from "../../store";
 import { Store } from "@ngrx/store";
+import { BasePage } from "../base.page/base.page";
 
 @Component({
   selector: 'car-room-page',
@@ -12,12 +12,11 @@ import { Store } from "@ngrx/store";
   templateUrl: './room.page.html',
   styleUrl: './room.page.scss'
 })
-export class RoomPage {
-  store = inject(Store)
-  poolNumbers$ = this.store.select(selectAllCall)
+export class RoomPage extends BasePage {
+  poolNumbers$ = this.store.select(selectRoom)
 
-  onDblClick(poolNumberObj: PoolNumber) {
+  onInvoke(poolNumberObj: PoolNumber) {
       const poolNumber = poolNumberObj.pool_number
-      this.store.dispatch(carpoolAction.doorExit({ poolNumber }))
+      this.store.dispatch(carpoolAction.roomSend({ poolNumber }))
   }
 }

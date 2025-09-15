@@ -1,32 +1,35 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { DispatchComponent, PoolNumberComponent } from '../../component';
-import { carpoolAction, selectAll } from '../../store';
+import { PoolNumberComponent } from '../../component';
+import { carpoolAction, selectDoor } from '../../store';
 import { TypedPoolNumber } from '../../model';
+import { BasePage } from '../base.page/base.page';
 
 @Component({
   selector: 'car-door-page',
-  imports: [AsyncPipe, DispatchComponent, PoolNumberComponent],
+  imports: [AsyncPipe, PoolNumberComponent],
   templateUrl: './door.page.html',
   styleUrl: './door.page.scss'
 })
-export class DoorPage {
-  store = inject(Store)
-  poolNumbers$ = this.store.select(selectAll)
+export class DoorPage extends BasePage {
+  poolNumbers$ = this.store.select(selectDoor)
 
-  onDblClick(poolNumber: TypedPoolNumber) {
-      switch(poolNumber.state) {
-        case 'LANE':
-          this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
-          break;
-        case 'CALL':
-        case 'RECALL':
-          this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
-          break;
-        case 'SEND':
-          this.store.dispatch(carpoolAction.doorExit({ poolNumber: poolNumber.pool_number }))
-          break;
-      }
+  onInvoke(poolNumber: TypedPoolNumber) {
+    switch(poolNumber.state) {
+      case 'LANE':
+        this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
+        break;
+      case 'CALL':
+      case 'RECALL':
+        this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: poolNumber.pool_number }))
+        break;
+      case 'SEND':
+        this.store.dispatch(carpoolAction.doorExit({ poolNumber: poolNumber.pool_number }))
+        break;
+      case 'EXIT':
+        this.store.dispatch(carpoolAction.escortGone({ poolNumber: poolNumber.pool_number }))
+        break;
+    }
   }
 }

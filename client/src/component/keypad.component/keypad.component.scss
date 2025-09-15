@@ -1,16 +1,9 @@
 @use '@angular/material' as mat;
 
 :host {
-    flex: none;
-    display: flex; justify-content: space-around;
-
-    @media (aspect-ratio >= 1) {
-        flex-direction: row;
-    }
-
-    @media (aspect-ratio <1) {
-        flex-direction: column;
-    }
+    flex: auto;
+    display: flex; flex-direction: row;
+    justify-content: space-around;
 }
 
 .keypad {

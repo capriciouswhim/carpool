@@ -105,5 +105,4 @@ export class CarpoolEffect {
             catchError((apiException: ApiException) => of(carpoolAction.escortGone_failure(apiException)))
         )))
     )
-
 }

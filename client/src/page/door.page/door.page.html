@@ -1,10 +1,10 @@
 <div class="superior">
     <div class="content">
         @for(poolNumber of poolNumbers$ | async; track poolNumber.pool_number) {
-            <car-pool-number [poolNumber]="poolNumber" (dblclick)="onDblClick(poolNumber)"></car-pool-number>
+            <car-pool-number [poolNumber]="poolNumber" (invoke)="onInvoke(poolNumber)"></car-pool-number>
         }
     </div>
 </div>
 <div class="inferior">
-    <car-dispatch></car-dispatch>
+    dispatch controls
 </div>

@@ -16,7 +16,6 @@ import { carpoolAction } from '../../store/carpool.action';
 })
 export class KeypadComponent {
   store = inject(Store)
-  // paused$ = this.store.select(selectPaused)
   value = signal<number | null>(null)
 
   onBackspace() {
@@ -25,6 +24,11 @@ export class KeypadComponent {
       const newValue = Math.floor(currentValue / 10)
       this.value.set(newValue !== 0 ? newValue : null)
     }
+  }
+
+  onReset() {
+    this.value.set(null);
+    this.store.dispatch(carpoolAction.reset());    
   }
 
   onClear() {

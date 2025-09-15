@@ -28,41 +28,41 @@ export class CarpoolService {
 
         const lane = history
             .filter(h => h.call_time === null
-                      && h.recall_time === null 
-                      && h.send_time === null
-                      && h.exit_time === null
-                      && h.gone_time === null)
-            .sort((a,b) => a.lane_time!.localeCompare(b.lane_time!))
+                && h.recall_time === null
+                && h.send_time === null
+                && h.exit_time === null
+                && h.gone_time === null)
+            .sort((a, b) => a.lane_time!.localeCompare(b.lane_time!))
 
         const call = history
             .filter(h => h.call_time !== null
-                      && h.recall_time === null 
-                      && h.send_time === null
-                      && h.exit_time === null
-                      && h.gone_time === null)
-            .sort((a,b) => a.call_time!.localeCompare(b.lane_time!))
+                && h.recall_time === null
+                && h.send_time === null
+                && h.exit_time === null
+                && h.gone_time === null)
+            .sort((a, b) => a.call_time!.localeCompare(b.lane_time!))
 
         const recall = history
-            .filter(h => h.recall_time !== null 
-                      && h.send_time === null
-                      && h.exit_time === null
-                      && h.gone_time === null)
-            .sort((a,b) => a.recall_time!.localeCompare(b.lane_time!))
-        
+            .filter(h => h.recall_time !== null
+                && h.send_time === null
+                && h.exit_time === null
+                && h.gone_time === null)
+            .sort((a, b) => a.recall_time!.localeCompare(b.lane_time!))
+
         const send = history
             .filter(h => h.send_time !== null
-                      && h.exit_time === null
-                      && h.gone_time === null)
-            .sort((a,b) => a.send_time!.localeCompare(b.lane_time!))
-    
+                && h.exit_time === null
+                && h.gone_time === null)
+            .sort((a, b) => a.send_time!.localeCompare(b.lane_time!))
+
         const exit = history
             .filter(h => h.exit_time !== null
-                      && h.gone_time === null)
-            .sort((a,b) => a.exit_time!.localeCompare(b.lane_time!))
+                && h.gone_time === null)
+            .sort((a, b) => a.exit_time!.localeCompare(b.lane_time!))
 
         const gone = history
             .filter(h => h.gone_time !== null)
-            .sort((a,b) => a.gone_time!.localeCompare(b.lane_time!))
+            .sort((a, b) => a.gone_time!.localeCompare(b.lane_time!))
 
         const callImmediate = await this.getOptionCallImmediate()
 
@@ -103,12 +103,14 @@ export class CarpoolService {
         const callImmediate = await this.getOptionCallImmediate()
 
         const payload = {
-            pool_number   :poolNumber,
-            lane_date     :today_date,
-            lane_time     :lane_time,
-            call_time     :callImmediate ? lane_time : null,
-            send_time     :null,
-            exit_time     :null
+            pool_number: poolNumber,
+            lane_date: today_date,
+            lane_time: lane_time,
+            call_time: callImmediate ? lane_time : null,
+            recall_time: null,
+            send_time: null,
+            exit_time: null,
+            gone_time: null
         }
 
         await this.db.history.upsert({
@@ -131,10 +133,6 @@ export class CarpoolService {
             where: {
                 pool_number: poolNumber,
                 lane_date: today_date,
-                call_time: null,
-                send_time: null,
-                exit_time: null,
-                gone_time: null             
             }
         })
     }
@@ -145,7 +143,7 @@ export class CarpoolService {
         const today_date = Util.formatDate(now)
         const call_time = Util.formatTime(now)
 
-        const dbRecord = await this.db.history.findUniqueOrThrow({
+        const dbRecord = await this.db.history.findUnique({
             where: {
                 pool_number_lane_date: {
                     pool_number: poolNumber,
@@ -154,17 +152,28 @@ export class CarpoolService {
             }
         })
 
+        if (null === dbRecord) {
+            return;
+        }
+
         let payload
-        if(dbRecord.call_time) {
+        if (dbRecord.call_time) {
             payload = {
-                recall_time: call_time
+                recall_time: call_time,
+                send_time: null,
+                exit_time: null,
+                gone_time: null
             }
         } else {
             payload = {
-                call_time
+                call_time,
+                recall_time: null,
+                send_time: null,
+                exit_time: null,
+                gone_time: null
             }
         }
-        
+
         await this.db.history.update({
             where: {
                 pool_number_lane_date: {
@@ -184,15 +193,15 @@ export class CarpoolService {
 
         const list = await this.db.history.findMany({
             where: {
-                lane_date     :today_date,
-                call_time     :null,
-                send_time     :null,
-                exit_time     :null
+                lane_date: today_date,
+                call_time: null,
+                send_time: null,
+                exit_time: null
             },
             orderBy: {
                 lane_time: 'asc'
             },
-            take: n            
+            take: n
         })
 
         await this.db.history.updateMany({
@@ -200,29 +209,29 @@ export class CarpoolService {
                 pool_number: {
                     in: list.map(i => i.pool_number)
                 },
-                lane_date     :today_date,
-                call_time     :null,
-                send_time     :null,
-                exit_time     :null
+                lane_date: today_date,
+                call_time: null,
+                send_time: null,
+                exit_time: null
             },
             data: {
-                call_time                
+                call_time
             }
         })
     }
 
     // Door calls all numbers
     async doorCallAll() {
-    const now = new Date()
+        const now = new Date()
         const today_date = Util.formatDate(now)
         const call_time = Util.formatTime(now)
-        
+
         await this.db.history.updateMany({
             where: {
-                lane_date     :today_date,
-                call_time     :null,
-                send_time     :null,
-                exit_time     :null
+                lane_date: today_date,
+                call_time: null,
+                send_time: null,
+                exit_time: null
             },
             data: {
                 call_time
@@ -236,7 +245,7 @@ export class CarpoolService {
             name: 'callImmediate',
             value
         }
-        
+
         await this.db.flag.upsert({
             where: {
                 name: 'callImmediate'
@@ -251,18 +260,16 @@ export class CarpoolService {
         const now = new Date()
         const today_date = Util.formatDate(now)
         const send_time = Util.formatTime(now)
-        
-        await this.db.history.update({
+
+        await this.db.history.updateMany({
             where: {
-                pool_number_lane_date: {
-                    pool_number: poolNumber,
-                    lane_date: today_date
-                },
-                send_time     :null,
-                exit_time     :null
+                pool_number: poolNumber,
+                lane_date: today_date
             },
             data: {
-                send_time
+                send_time,
+                exit_time: null,
+                gone_time: null
             }
         })
     }
@@ -272,17 +279,15 @@ export class CarpoolService {
         const now = new Date()
         const today_date = Util.formatDate(now)
         const exit_time = Util.formatTime(now)
-        
-        await this.db.history.update({
+
+        await this.db.history.updateMany({
             where: {
-                pool_number_lane_date: {
-                    pool_number: poolNumber,
-                    lane_date: today_date
-                },
-                exit_time     :null
+                pool_number: poolNumber,
+                lane_date: today_date
             },
             data: {
-                exit_time
+                exit_time,
+                gone_time: null
             }
         })
     }
@@ -292,18 +297,15 @@ export class CarpoolService {
         const now = new Date()
         const today_date = Util.formatDate(now)
         const gone_time = Util.formatTime(now)
-        
-        await this.db.history.update({
+
+        await this.db.history.updateMany({
             where: {
-                pool_number_lane_date: {
-                    pool_number: poolNumber,
-                    lane_date: today_date
-                },
-                gone_time     :null
+                pool_number: poolNumber,
+                lane_date: today_date,
             },
             data: {
                 gone_time
             }
         })
-    }    
+    }
 }
