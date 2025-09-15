@@ -1,5 +1,5 @@
 <div class="keypad">
-    <button matButton="outlined" (click)="onButton(-1)">all</button>
-    <button matButton="outlined" (click)="onButton(4)">+4</button>
-    <button [matButton]="option() ? 'filled' : 'outlined'" (click)="onButton(0)">auto</button>
+    <button matButton="outlined" (dblclick)="onButton(-1)">all</button>
+    <button matButton="outlined" (dblclick)="onButton(4)">+4</button>
+    <button [matButton]="option() ? 'filled' : 'outlined'" (dblclick)="onButton(0)">auto</button>
 </div>
