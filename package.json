@@ -1,7 +1,7 @@
 {
   "name": "carpool",
-  "version": "2.0.0",
-  "build": "2025-09-10T17:00:00.000Z",
+  "version": "3.1.4",
+  "build": "2025-09-16T18:06:12.864Z",
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
@@ -10,7 +10,7 @@
     "docker:build:client": "podman build -t carpool/client:latest -f Dockerfile.client .",
     "docker:build": "yarn docker:build:server && yarn docker:build:client",
     "docker:start:server": "podman run -d -p 8081:8081 --name carpool-server carpool/server:latest",
-    "docker:start:client": "podman run -d -p 8081:8081 --name carpool-client carpool/client:latest",
+    "docker:start:client": "podman run -d -p 8080:80 --name carpool-client carpool/client:latest",
     "docker:start": "yarn docker:start:server && yarn docker:start:client",
     "docker:deploy": "yarn docker:build && yarn docker:start",
     "docker:stop": "podman stop carpool-server && podman stop carpool-client"

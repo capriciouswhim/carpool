@@ -60,9 +60,9 @@ console.log()
 
 const targetFileSpec = [
     './package.json',
-    './api/package.json',
-    './web/package.json',
-    './web/src/app/app.html'
+    './server/package.json',
+    './client/package.json',
+    './client/src/component/version.component/version.component.html'
 ]
 
 // get file contents and versions from files

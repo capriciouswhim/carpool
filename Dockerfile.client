@@ -24,4 +24,4 @@ RUN yarn build
 
 FROM docker.io/library/nginx:mainline-alpine-slim AS client-runtime
 COPY --from=client-build /opt/client/dist/carpool-client/browser/* /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 4200
