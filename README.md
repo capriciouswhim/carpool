@@ -1,4 +1,11 @@
-# Current Deployment Process
+# New Deployment Process
+
+Docker files have been created for client and server.  These have been tested
+and work on pop-os, but builds on Raspberry Pi platforms have failed and are
+being investigated.  An nginx configuration is included to proxy to the
+containers.
+
+# Old Deployment Process
 
 git clone https://github.com/capriciouswhim/carpool.git carpool-prod
 
