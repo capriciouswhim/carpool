@@ -15,6 +15,31 @@ export const _selectExit = carpoolFeature.selectExit
 export const _selectGone = carpoolFeature.selectGone
 export const selectCallImmediate = carpoolFeature.selectCallImmediate
 
+export const selectAll = createSelector(
+  _selectLane,
+  _selectCall,
+  _selectRecall,
+  _selectSend,
+  _selectExit,
+  _selectGone,
+  (l,c,r,s,e,g) => {
+    return [
+      ...[
+        ...l,
+        ...c,
+        ...r
+      ].sort((a,b) => a.sort.localeCompare(b.sort)),
+      ...[
+        ...s,
+        ...e
+      ].sort((a,b) => a.pool_number - b.pool_number),
+      ...[
+        ...g
+      ].sort((a,b) => a.pool_number - b.pool_number),
+    ]
+  }
+)
+
 export const selectLane = createSelector(_selectLane, _selectExit, (lane, exit) => {
   return [
     ...[...lane].sort((a,b) => a.sort.localeCompare(b.sort)),
@@ -36,12 +61,25 @@ export const selectDoor = createSelector(_selectLane, _selectCall, _selectRecall
   ]
 })
 
-export const selectRoom = createSelector(_selectCall, _selectRecall, (call, recall) => {
-  return [
-    ...call,
-    ...recall    
-  ].sort((a,b) => a.pool_number - b.pool_number)
-})
+export const selectRoom = createSelector(
+  _selectLane,
+  _selectCall,
+  _selectRecall,
+  _selectSend,
+  _selectExit,
+  _selectGone,
+  (l,c,r,s,e,g) => {
+    return [
+      ...[
+        ...c,
+        ...r
+      ].sort((a,b) => a.sort.localeCompare(b.sort)),
+      ...[
+        ...s,
+      ].sort((a,b) => a.pool_number - b.pool_number),
+    ]
+  }
+)
 
 export const selectEscort = createSelector(_selectExit, (exit) => {
   return [

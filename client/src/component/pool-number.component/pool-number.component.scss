@@ -25,35 +25,31 @@
 }
 
 .lane {
-    border-color: hsl(200 100% 50%);
-    background-color: hsl(200 100% 12.5%);
-}
-
-.call {
     border-color: hsl(300, 0%, 50%);
     background-color: hsl(300 0% 12.5%);
 }
 
+.call {
+    border-color: hsl(200 50% 40%);
+    background-color: hsl(200 50% 20%);
+}
+
 .recall {
-    border-color: hsl(70, 100%, 50%);
-    background-color: hsl(70 100% 12.5%);
+    border-color: hsl(70, 100%, 40%);
+    background-color: hsl(200 50% 20%);
 }
 
 .send {
-    border-color: hsl(270 75% 50%);
-    background-color: hsl(270 75% 12.5%);
+    border-color: hsl(270 50% 40%);
+    background-color: hsl(270 50% 20%);
 }
 
 .exit {
-    border-color: hsl(10 100% 50%);
-    background-color: hsl(10 100% 12.5%);
+    border-color: hsl(10 100% 40%);
+    background-color: hsl(10 50% 20%);
 }
 
 .gone {
-    border-color: hsl(130, 100%, 50%);
-    background-color: hsl(130 100% 12.5%);
-}
-
-.stale {
-    display: none
+    border-color: hsl(130, 50%, 20%);
+    background-color: hsl(130 50% 10%);
 }

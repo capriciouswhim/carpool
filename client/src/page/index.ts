@@ -4,5 +4,6 @@ import { LanePage } from "./lane.page/lane.page";
 import { RoomPage } from "./room.page/room.page";
 import { TestPage } from "./test.page/test.page";
 import { EscortPage } from "./escort.page/escort.page";
+import { BasePage } from "./base.page/base.page";
 
-export { DoorPage, LandingPage, LanePage, RoomPage, TestPage, EscortPage }
+export { BasePage, DoorPage, LandingPage, LanePage, RoomPage, TestPage, EscortPage }

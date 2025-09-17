@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { LanePage, DoorPage, RoomPage, EscortPage } from "../";
-import { BasePage } from "../base.page/base.page";
+import { Component} from "@angular/core";
+import { LanePage, DoorPage, EscortPage } from "../";
 
 @Component({
-  imports: [DoorPage, LanePage, RoomPage, EscortPage ],
+  imports: [DoorPage, LanePage, EscortPage ],
   templateUrl: './global.page.html',
   styleUrl: './global.page.scss'
 })
-export class GlobalPage extends BasePage {}
+export class GlobalPage {
+}

@@ -6,6 +6,8 @@ import { ApiException } from "../model/api.exception";
 export const carpoolAction = createActionGroup({
     source: carpoolSource,
     events: {
+        poll: emptyProps(),
+        
         get: emptyProps(),
         get_success: props<CarpoolResponse>(),
         get_failure: props<ApiException>(),

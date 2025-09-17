@@ -10,6 +10,11 @@ export class CarpoolEffect {
     private actions$ = inject(Actions)
     private carpoolService = inject(CarpoolService)
 
+    public poll$ = createEffect(() => this.actions$.pipe(
+        ofType(carpoolAction.poll),
+        tap(_action => this.carpoolService.startPolling())
+    ), { dispatch: false})
+    
     public get$ = createEffect(() => this.actions$.pipe(
         ofType(carpoolAction.get),
         exhaustMap(_action => this.carpoolService.get().pipe(

@@ -1,10 +1,9 @@
-import { AsyncPipe } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
-import { PoolNumberComponent } from "../../component";
-import { PoolNumber } from "../../model";
-import { carpoolAction, selectRoom } from "../../store";
-import { Store } from "@ngrx/store";
-import { BasePage } from "../base.page/base.page";
+import { Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { PoolNumberComponent } from '../../component';
+import { TypedPoolNumber } from '../../model';
+import { BasePage } from '../../page';
+import { selectRoom } from '../../store';
 
 @Component({
   selector: 'car-room-page',
@@ -13,10 +12,9 @@ import { BasePage } from "../base.page/base.page";
   styleUrl: './room.page.scss'
 })
 export class RoomPage extends BasePage {
-  poolNumbers$ = this.store.select(selectRoom)
+  override poolNumbers$ = this.store.select(selectRoom)
+  
+  onInvoke = (poolNumber: TypedPoolNumber) =>
+    this.store.dispatch(this.marshal.nextStep('ESCORT', poolNumber))
 
-  onInvoke(poolNumberObj: PoolNumber) {
-      const poolNumber = poolNumberObj.pool_number
-      this.store.dispatch(carpoolAction.roomSend({ poolNumber }))
-  }
 }

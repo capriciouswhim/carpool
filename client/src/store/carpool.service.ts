@@ -3,12 +3,20 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { Observable, Subscriber } from "rxjs";
 import { ApiException, CarpoolResponse } from "../model";
 import { Store } from "@ngrx/store";
+import { carpoolAction } from "./carpool.action";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolService {
     private readonly apiUrl = this.getAPIurl()
     private readonly audioHorn = new Audio('horn.mp3')
     private readonly store = inject(Store)
+    private intervalHandle: number | null = null
+
+    startPolling() {
+        if(!this.intervalHandle) {
+            this.intervalHandle = setInterval(() => this.store.dispatch(carpoolAction.get()), 2000)
+        }
+    }
 
     getAPIurl() {
         switch(window.location.hostname) {

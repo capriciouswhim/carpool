@@ -9,7 +9,6 @@
 
 .lane,
 .door,
-.room,
 .escort {
     flex: 1;
     display: grid;
@@ -25,10 +24,4 @@
     background-color: cyan;
     color: black;
     text-align: center;
-}
-
-.duo {
-    flex: 1;
-    display: flex; gap: 1dvh;
-    flex-direction: column;
 }
