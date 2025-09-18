@@ -24,4 +24,5 @@ RUN yarn build
 
 FROM docker.io/library/nginx:mainline-alpine-slim AS client-runtime
 COPY --from=client-build /opt/client/dist/carpool-client/browser/* /usr/share/nginx/html
+RUN mv /etc/nginx/conf.d/default.conf / &&sed -e 's/index\s*index.html\s*index.htm/try_files $uri $uri\/ \/index.html/g' /default.conf > /etc/nginx/conf.d/default.conf
 EXPOSE 4200
