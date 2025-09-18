@@ -3,6 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { PoolNumberComponent } from '../../component';
 import { TypedPoolNumber } from '../../model';
 import { BasePage } from '../../page';
+import { selectEscort } from '../../store';
 
 @Component({
   selector: 'car-escort-page',
@@ -11,6 +12,7 @@ import { BasePage } from '../../page';
   styleUrl: './escort.page.scss'
 })
 export class EscortPage extends BasePage {
+  override poolNumbers$ = this.store.select(selectEscort)
 
   onInvoke = (poolNumber: TypedPoolNumber) =>
     this.store.dispatch(this.marshal.nextStep('ESCORT', poolNumber))

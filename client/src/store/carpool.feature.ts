@@ -106,8 +106,27 @@ export const selectRoom = createSelector(
   }
 )
 
-export const selectEscort = createSelector(_selectExit, (exit) => {
-  return [
-    ...exit
-  ].sort((a,b) => a.pool_number - b.pool_number)
-})
+export const selectEscort = createSelector(
+  _selectLane,
+  _selectCall,
+  _selectRecall,
+  _selectSend,
+  _selectExit,
+  _selectGone,
+  (l,c,r,s,e,g) => {
+    return [
+      ...[
+        ...l,
+        ...c,
+        ...r
+      ].sort((a,b) => a.pool_number - b.pool_number),
+      ...[
+        ...s,
+        ...e
+      ].sort((a,b) => a.pool_number - b.pool_number),
+      ...[
+        ...g
+      ].sort((a,b) => a.pool_number - b.pool_number),
+    ]
+  }
+)
