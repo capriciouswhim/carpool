@@ -33,6 +33,9 @@ export class LandingPage {
       case 'escort':
         this.router.navigate(['/escort'], { skipLocationChange: true });
         break;
+      case 'global':
+        this.router.navigate(['/global'], { skipLocationChange: true });
+        break;
       default:
         this.router.navigate(['/room'], { skipLocationChange: true });
         break;

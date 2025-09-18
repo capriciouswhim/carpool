@@ -40,6 +40,31 @@ export const selectAll = createSelector(
   }
 )
 
+export const selectExit = createSelector(
+  _selectLane,
+  _selectCall,
+  _selectRecall,
+  _selectSend,
+  _selectExit,
+  _selectGone,
+  (l,c,r,s,e,g) => {
+    return [
+      ...[
+        ...l,
+        ...c,
+        ...r
+      ].sort((a,b) => a.pool_number - b.pool_number),
+      ...[
+        ...s,
+        ...e
+      ].sort((a,b) => a.pool_number - b.pool_number),
+      ...[
+        ...g
+      ].sort((a,b) => a.pool_number - b.pool_number),
+    ]
+  }
+)
+
 export const selectLane = createSelector(_selectLane, _selectExit, (lane, exit) => {
   return [
     ...[...lane].sort((a,b) => a.sort.localeCompare(b.sort)),
@@ -73,10 +98,10 @@ export const selectRoom = createSelector(
       ...[
         ...c,
         ...r
-      ].sort((a,b) => a.sort.localeCompare(b.sort)),
-      ...[
-        ...s,
       ].sort((a,b) => a.pool_number - b.pool_number),
+      // ...[
+      //   ...s,
+      // ].sort((a,b) => a.pool_number - b.pool_number),
     ]
   }
 )
