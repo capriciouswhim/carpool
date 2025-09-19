@@ -26,13 +26,13 @@ export class KeypadComponent {
   }
 
   onReset() {
-    this.value.set(null);
-    this.store.dispatch(carpoolAction.reset());    
+    // this.value.set(null);
+    // this.store.dispatch(carpoolAction.reset());    
   }
 
   onClear() {
-    this.value.set(null);
-    this.store.dispatch(carpoolAction.resetLane());
+    // this.value.set(null);
+    // this.store.dispatch(carpoolAction.resetLane());
   }
 
   onDigit(keyValue: number) {
