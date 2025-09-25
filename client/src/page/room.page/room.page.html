@@ -1,5 +1,5 @@
 <div class="superior">
 @for(poolNumber of poolNumbers$ | async; track poolNumber.pool_number) {
-    <car-pool-number [poolNumber]="poolNumber" (invoke)="onInvoke(poolNumber)"></car-pool-number>
+    <car-pool-number [poolNumber]="poolNumber" [showLabel]="false" (invoke)="onInvoke(poolNumber)"></car-pool-number>
 }
 </div>

@@ -1,3 +1,4 @@
 <div class="poolNumber" (dblclick) = "onDblClick($event)" [class]="getClass(poolNumber)">
+     <div class="human">{{ getHumanLabel(poolNumber) }}</div>
      <div class="number">{{ poolNumber().pool_number }}</div>
 </div>

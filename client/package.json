@@ -1,7 +1,7 @@
 {
   "name": "carpool-client",
-  "version": "3.4.0",
-  "build": "2025-09-19T17:56:14.802Z",
+  "version": "3.5.0",
+  "build": "2025-09-25T16:19:54.821Z",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
