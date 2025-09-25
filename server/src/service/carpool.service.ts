@@ -89,7 +89,8 @@ export class CarpoolService {
                 lane_date: today_date,
                 call_time: null,
                 send_time: null,
-                exit_time: null
+                exit_time: null,
+                gone_time: null
             }
         })
     }
