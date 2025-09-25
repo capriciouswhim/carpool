@@ -9,13 +9,27 @@
 .keypad {
     flex: none;
     display: grid;
-    grid-template-columns: repeat(3, 2cm);
+    grid-template-columns: repeat(5, 2cm);
     gap: 1rem;
+}
+
+.call {
+    place-content: center;
+    text-align: center;
+}
+
+.special {
+  @include mat.button-overrides((
+    filled-container-color: var(--mat-sys-tertiary),
+    filled-label-text-color: var(--mat-sys-on-tertiary),
+    outlined-outline-color: var(--mat-sys-tertiary),
+    outlined-label-text-color: var(--mat-sys-tertiary),
+  ));
 }
 
 .wide {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 6;
 
     text-align: center;
 

@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
 import { carpoolAction } from '../../store/carpool.action';
+import { selectCallImmediate } from '../../store';
 
 
 @Component({
@@ -15,7 +16,14 @@ import { carpoolAction } from '../../store/carpool.action';
 })
 export class KeypadComponent {
   store = inject(Store)
+  option = signal(false)
   value = signal<number | null>(null)
+
+  constructor() {
+      this.store.select(selectCallImmediate).subscribe(o => {
+      this.option.set(o)
+      })
+  }
 
   onBackspace() {
     const currentValue = this.value() ?? 0;
@@ -54,6 +62,15 @@ export class KeypadComponent {
         break;
       case 'e':
         this.onEnter();
+        break;
+      case -1: // call all
+        this.store.dispatch(carpoolAction.doorCallAll())
+        break;
+      case -2: // call + 4
+        this.store.dispatch(carpoolAction.doorCallMany({ num: 4 }))
+        break;
+      case -3: // call auto
+        this.store.dispatch(carpoolAction.setOptionCallImmediate({ option: !this.option() }))
         break;
       default:
         this.onDigit(button);
