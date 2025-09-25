@@ -22,8 +22,8 @@ export class Marshal {
                     : carpoolAction.doorCallOne(payload)
             case 'CALL':
             case 'RECALL':
-                // Are we working as the DOOR?
-                return role === 'DOOR'
+                // Are we working as the LANE or DOOR?
+                return role === 'LANE' || role === 'DOOR'
                     // The door may recall numbers
                     ? carpoolAction.doorCallOne(payload)
                     // All other stations may send
