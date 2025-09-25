@@ -9,7 +9,7 @@
 .keypad {
     flex: none;
     display: grid;
-    grid-template-columns: repeat(5, 2cm);
+    grid-template-columns: repeat(3, 2cm) 0.3cm 2cm;
     gap: 1rem;
 }
 
