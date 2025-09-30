@@ -1,10 +1,11 @@
 import { ActionCreatorProps, createReducer, on } from "@ngrx/store";
 import { carpoolInitialState, CarpoolState } from "./carpool.state";
 import { carpoolAction } from "./carpool.action";
-import { ApiException, CarpoolResponse, TypedPoolNumber } from "../model";
+import { ApiException, CarpoolResponse, TokenResponse, TypedPoolNumber } from "../model";
 
 export const carpoolReducer = createReducer(
   carpoolInitialState,
+    on(carpoolAction.token_success,(s,a) => tokenValidation(s,a)),
     on(carpoolAction.get_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.reset_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.resetLane_success,(s,a) => updateHistory(s,a)),
@@ -18,6 +19,7 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.doorExit_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.escortGone_success,(s,a) => updateHistory(s,a)),
 
+    on(carpoolAction.token_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.get_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.reset_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.resetLane_failure,(s,a) => updateFailure(s,a)),
@@ -31,6 +33,13 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.doorExit_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.escortGone_failure,(s,a) => updateFailure(s,a))
 )
+
+function tokenValidation(state: CarpoolState, action: TokenResponse): CarpoolState {
+  return {
+    ...state,
+    errorMessage: action.valid ? null : `Could not vaidate authentication from Google.`
+  }
+}
 
 function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolState {
   return {
@@ -55,3 +64,4 @@ function updateFailure(state: CarpoolState, action: ApiException): CarpoolState 
     errorMessage: 'Please contact support@artsyteachy.com.'
   }
 }
+

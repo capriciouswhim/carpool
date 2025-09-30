@@ -10,6 +10,14 @@ export class CarpoolEffect {
     private actions$ = inject(Actions)
     private carpoolService = inject(CarpoolService)
 
+    public token$ = createEffect(() => this.actions$.pipe(
+        ofType(carpoolAction.token),
+        exhaustMap(action => this.carpoolService.validateToken(action).pipe(
+            map(response => carpoolAction.token_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.token_failure(apiException)))
+        ))
+    ))
+
     public poll$ = createEffect(() => this.actions$.pipe(
         ofType(carpoolAction.poll),
         tap(_action => this.carpoolService.startPolling())

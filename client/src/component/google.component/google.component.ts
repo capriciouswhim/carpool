@@ -1,4 +1,6 @@
 import { Component, inject, NgZone, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { carpoolAction } from "../../store";
 
 declare const google: any;
 
@@ -8,6 +10,7 @@ declare const google: any;
 })
 export class GoogleComponent implements OnInit {
     ngZone = inject(NgZone)
+    store = inject(Store)
 
     ngOnInit(): void {
         this.initializeGoogleSignIn();
@@ -29,14 +32,6 @@ export class GoogleComponent implements OnInit {
 
     handleCredentialResponse(response: any) {
         // response.credential is the JWT token
-        console.log('Encoded JWT ID token: ' + response.credential);
-
-        // You can decode the JWT token here or send it to your backend for verification
-        // For demonstration, we'll just log it
-
-        // If using NgZone, ensure any UI updates are run inside Angular's zone
-        this.ngZone.run(() => {
-            // Update your application state here, e.g., store user info, navigate, etc.
-        });
+        this.store.dispatch(carpoolAction.token({ token: response.credential }))
     }
 }

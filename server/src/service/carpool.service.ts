@@ -1,9 +1,14 @@
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { CarpoolResponse } from "../model/carpool-response.model.js";
+import { TokenResponse } from "../../../client/src/model/token.model.js";
 import { Util } from "../util.js";
 
 export class CarpoolService {
     db = new PrismaClient()
+
+    async validateToken(_token: string): Promise<TokenResponse> {
+        return { valid: false }
+    }
 
     // Get current state of call immediate option
     async getOptionCallImmediate() {

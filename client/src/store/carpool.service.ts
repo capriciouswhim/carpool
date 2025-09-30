@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Observable, Subscriber } from "rxjs";
-import { ApiException, CarpoolResponse } from "../model";
+import { ApiException, CarpoolResponse, TokenRequest, TokenResponse } from "../model";
 import { Store } from "@ngrx/store";
 import { carpoolAction } from "./carpool.action";
 
@@ -36,7 +36,7 @@ export class CarpoolService {
         }
     }
 
-    handleResponse(o: Subscriber<CarpoolResponse>, response: AxiosResponse<CarpoolResponse, any>) {
+    handleResponse<T>(o: Subscriber<T>, response: AxiosResponse<T, any>) {
         if(response.status >= 200 && response.status < 300) {
             o.next(response.data)
             o.complete()
@@ -46,7 +46,7 @@ export class CarpoolService {
         }
     }
 
-    handleCatch(o: Subscriber<CarpoolResponse>, reason: any) {
+    handleCatch<T>(o: Subscriber<T>, reason: any) {
         if(reason instanceof AxiosError) {
             const err: ApiException = { axiosError: reason }
             o.error(err);
@@ -56,31 +56,32 @@ export class CarpoolService {
         }
     }
 
-    dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', uri: string) => new Observable<CarpoolResponse>(o => {
+    dispatch = <T>(method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', uri: string, data?: any) => new Observable<T>(o => {
         const APIurl = this.getAPIurl()
         const url = `${APIurl}${uri}`
-        // console.dir([method, url]);
 
         axios
-            .request<CarpoolResponse>({
+            .request<T>({
                 method,
                 url,
+                data,
                 validateStatus: () => true // all statuses are good
             })
             .then(response => this.handleResponse(o, response))
             .catch(reason => this.handleCatch(o, reason))
     })
 
-    get = () => this.dispatch('GET', '/')
-    reset = () => this.dispatch('DELETE', '/reset')
-    resetLane = () => this.dispatch('DELETE', '/')
-    laneAdd = (poolNumber: number) => this.dispatch('PUT', `/${poolNumber}`)
-    laneDel = (poolNumber: number) => this.dispatch('DELETE', `/${poolNumber}`)
-    doorCallOne = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/call`)
-    doorCallMany = (num: number) => this.dispatch('PATCH', `/call?n=${num}`)
-    doorCallAll = () => this.dispatch('PATCH', `/call/all`)
-    setOptionCallImmediate = (option: boolean) => this.dispatch('PUT', `/option/callImmediate?option=${option}`)
-    roomSend = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/send`)
-    doorExit = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/exit`)
-    escortGone = (poolNumber: number) => this.dispatch('PATCH', `/${poolNumber}/gone`)
+    validateToken = (token: TokenRequest) => this.dispatch<TokenResponse>('POST', '/token', token)
+    get = () => this.dispatch<CarpoolResponse>('GET', '/')
+    reset = () => this.dispatch<CarpoolResponse>('DELETE', '/reset')
+    resetLane = () => this.dispatch<CarpoolResponse>('DELETE', '/')
+    laneAdd = (poolNumber: number) => this.dispatch<CarpoolResponse>('PUT', `/${poolNumber}`)
+    laneDel = (poolNumber: number) => this.dispatch<CarpoolResponse>('DELETE', `/${poolNumber}`)
+    doorCallOne = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/call`)
+    doorCallMany = (num: number) => this.dispatch<CarpoolResponse>('PATCH', `/call?n=${num}`)
+    doorCallAll = () => this.dispatch<CarpoolResponse>('PATCH', `/call/all`)
+    setOptionCallImmediate = (option: boolean) => this.dispatch<CarpoolResponse>('PUT', `/option/callImmediate?option=${option}`)
+    roomSend = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/send`)
+    doorExit = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/exit`)
+    escortGone = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/gone`)
 }
