@@ -14,6 +14,7 @@ export const _selectSend = carpoolFeature.selectSend
 export const _selectExit = carpoolFeature.selectExit
 export const _selectGone = carpoolFeature.selectGone
 export const selectCallImmediate = carpoolFeature.selectCallImmediate
+export const selectErrorMessage = carpoolFeature.selectErrorMessage
 
 export const selectAll = createSelector(
   _selectLane,

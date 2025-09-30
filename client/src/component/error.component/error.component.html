@@ -1,0 +1,7 @@
+@if((errorMessage$ | async) !== null) {
+<div class="shade">
+    <div class="message">
+        {{ errorMessage$ | async }}
+    </div>
+</div>
+}

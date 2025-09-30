@@ -1,7 +1,7 @@
 import { ActionCreatorProps, createReducer, on } from "@ngrx/store";
 import { carpoolInitialState, CarpoolState } from "./carpool.state";
 import { carpoolAction } from "./carpool.action";
-import { CarpoolResponse, TypedPoolNumber } from "../model";
+import { ApiException, CarpoolResponse, TypedPoolNumber } from "../model";
 
 export const carpoolReducer = createReducer(
   carpoolInitialState,
@@ -16,7 +16,20 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.setOptionCallImmediate_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.roomSend_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.doorExit_success,(s,a) => updateHistory(s,a)),
-    on(carpoolAction.escortGone_success,(s,a) => updateHistory(s,a))
+    on(carpoolAction.escortGone_success,(s,a) => updateHistory(s,a)),
+
+    on(carpoolAction.get_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.reset_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.resetLane_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.laneAdd_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.laneDel_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.doorCallOne_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.doorCallMany_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.doorCallAll_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.setOptionCallImmediate_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.roomSend_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.doorExit_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.escortGone_failure,(s,a) => updateFailure(s,a))
 )
 
 function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolState {
@@ -31,5 +44,14 @@ function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolSta
       gone: action.gone.map<TypedPoolNumber>(l => ({...l, state: 'GONE', sort: l.lane_time})),
       callImmediate: action.callImmediate
     }
+  }
+}
+
+function updateFailure(state: CarpoolState, action: ApiException): CarpoolState {
+  console.dir(action);
+
+  return {
+    ...state,
+    errorMessage: 'Please contact support@artsyteachy.com.'
   }
 }
