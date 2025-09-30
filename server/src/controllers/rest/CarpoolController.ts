@@ -3,18 +3,10 @@ import { BodyParams, PathParams, QueryParams } from "@tsed/platform-params";
 import { Delete, Get, Patch, Post, Put, Tags } from "@tsed/schema";
 import { CarpoolResponse } from "../../model/carpool-response.model.js";
 import { CarpoolService } from "../../service/carpool.service.js";
-import { TokenResponse } from "../../../../client/src/model/token.model.js"
 
 @Controller("/carpool")
 export class CarpoolController {
     carpoolService = new CarpoolService()
-
-    // Validate JWT
-    @Post('/token')
-    @Tags("security")
-    async token(@BodyParams('token') token: string): Promise<TokenResponse> {
-        return this.carpoolService.validateToken(token)
-    }
 
     // Get complete current state
     @Get('/')

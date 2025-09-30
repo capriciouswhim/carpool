@@ -1,15 +1,11 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { carpoolSource } from "./carpool.state";
-import { CarpoolResponse, TokenRequest, TokenResponse } from "../model";
+import { CarpoolResponse } from "../model";
 import { ApiException } from "../model/api.exception";
 
 export const carpoolAction = createActionGroup({
     source: carpoolSource,
     events: {
-        token: props<TokenRequest>(),
-        token_success: props<TokenResponse>(),
-        token_failure: props<ApiException>(),
-
         poll: emptyProps(),
         
         get: emptyProps(),

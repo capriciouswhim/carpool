@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Observable, Subscriber } from "rxjs";
-import { ApiException, CarpoolResponse, TokenRequest, TokenResponse } from "../model";
+import { ApiException, CarpoolResponse } from "../model";
 import { Store } from "@ngrx/store";
 import { carpoolAction } from "./carpool.action";
 
@@ -71,7 +71,6 @@ export class CarpoolService {
             .catch(reason => this.handleCatch(o, reason))
     })
 
-    validateToken = (token: TokenRequest) => this.dispatch<TokenResponse>('POST', '/token', token)
     get = () => this.dispatch<CarpoolResponse>('GET', '/')
     reset = () => this.dispatch<CarpoolResponse>('DELETE', '/reset')
     resetLane = () => this.dispatch<CarpoolResponse>('DELETE', '/')
