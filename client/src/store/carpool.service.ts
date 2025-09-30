@@ -7,8 +7,6 @@ import { carpoolAction } from "./carpool.action";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolService {
-    private readonly apiUrl = this.getAPIurl()
-    private readonly audioHorn = new Audio('horn.mp3')
     private readonly store = inject(Store)
     private intervalHandle: number | null = null
 
@@ -57,21 +55,6 @@ export class CarpoolService {
             o.error(err)
         }
     }
-    private timeoutId: number = 0;
-    private readonly hornDebounce = 6 * 1000; // 6 seconds in ms
-
-    horn = () => {
-        const self = this;
-        if(self.timeoutId) {
-            clearTimeout(self.timeoutId);
-        }
-
-        this.timeoutId = setTimeout(() => {
-            self.timeoutId = 0;
-            self.audioHorn.play()
-        }, self.hornDebounce);
-    }
-
 
     dispatch = (method: 'GET' | 'PUT' | 'PATCH' | 'DELETE', uri: string) => new Observable<CarpoolResponse>(o => {
         const APIurl = this.getAPIurl()

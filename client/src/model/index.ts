@@ -3,4 +3,4 @@ import { CarpoolResponse } from "../../../server/src/model/carpool-response.mode
 import { PoolNumber } from "../../../server/src/model/pool-number.model";
 import { TypedPoolNumber } from "./typedPoolNumber.model";
 
-export type { ApiException, CarpoolResponse, PoolNumber, TypedPoolNumber }
+export type { ApiException, CarpoolResponse, TypedPoolNumber }
