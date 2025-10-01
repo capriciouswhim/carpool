@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { selectErrorMessage } from "../../store";
+import { carpoolSelectErrorMessage } from "../../store";
 import { AsyncPipe } from "@angular/common";
 
 @Component({
@@ -11,5 +11,5 @@ import { AsyncPipe } from "@angular/common";
 })
 export class ErrorComponent {
     store = inject(Store)
-    errorMessage$ = this.store.select(selectErrorMessage);
+    errorMessage$ = this.store.select(carpoolSelectErrorMessage);
 }
