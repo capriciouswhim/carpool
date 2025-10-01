@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { selectErrorMessage } from "../../store/carpool.feature";
+import { selectErrorMessage } from "../../store";
 import { AsyncPipe } from "@angular/common";
 
 @Component({

@@ -1,7 +1,6 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { carpoolSource } from "./carpool.state";
-import { CarpoolResponse } from "../model";
-import { ApiException } from "../model/api.exception";
+import { ApiException, CarpoolResponse } from "../../model";
 
 export const carpoolAction = createActionGroup({
     source: carpoolSource,

@@ -1,7 +1,7 @@
 import { createFeature, createSelector } from "@ngrx/store";
 import { carpoolReducer } from './carpool.reducer'
 import { carpoolSource } from './carpool.state'
-import { TypedPoolNumber } from "../model";
+import { TypedPoolNumber } from "../../model";
 
 export const carpoolFeature = createFeature({
   name: carpoolSource,

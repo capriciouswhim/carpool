@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { carpoolInitialState, CarpoolState } from "./carpool.state";
 import { carpoolAction } from "./carpool.action";
-import { ApiException, CarpoolResponse, TypedPoolNumber } from "../model";
+import { ApiException, CarpoolResponse, TypedPoolNumber } from "../../model";
 
 export const carpoolReducer = createReducer(
   carpoolInitialState,

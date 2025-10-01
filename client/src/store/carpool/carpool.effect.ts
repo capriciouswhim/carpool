@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { carpoolAction } from "./carpool.action";
 import { CarpoolService } from "./carpool.service";
 import { catchError, exhaustMap, map, of, startWith, tap } from "rxjs";
-import { ApiException } from "../model/api.exception";
+import { ApiException } from "../../model/api.exception";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolEffect {

@@ -1,5 +1,4 @@
-import { CarpoolResponse, TypedPoolNumber } from "../model"
-import { carpoolReducer } from "./carpool.reducer"
+import { CarpoolResponse, TypedPoolNumber } from "../../model"
 
 export const carpoolSource = 'carpool'
 

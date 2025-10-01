@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Observable, Subscriber } from "rxjs";
-import { ApiException, CarpoolResponse } from "../model";
+import { ApiException, CarpoolResponse } from "../../model";
 import { Store } from "@ngrx/store";
 import { carpoolAction } from "./carpool.action";
-import { Util } from "../util";
+import { Util } from "../../util";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolService {
