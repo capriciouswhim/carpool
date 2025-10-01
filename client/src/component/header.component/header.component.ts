@@ -4,12 +4,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from '@angular/material/menu'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from "@angular/material/icon";
-import { GoogleComponent } from '../google.component/google.component';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'car-header',
-  imports: [GoogleComponent, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule, RouterLink, RouterModule],
+  imports: [MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule, RouterLink, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
