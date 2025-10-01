@@ -4,16 +4,63 @@ import { Observable, Subscriber } from "rxjs";
 import { ApiException, CarpoolResponse } from "../model";
 import { Store } from "@ngrx/store";
 import { carpoolAction } from "./carpool.action";
+import { Util } from "../util";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolService {
     private readonly store = inject(Store)
     private intervalHandle: number | null = null
 
+    delay = () => new Promise<void>((resolve, reject) => {
+        setTimeout(() => { resolve() }, 1000)
+    })
+
     startPolling() {
         if(!this.intervalHandle) {
             this.intervalHandle = setInterval(() => this.store.dispatch(carpoolAction.get()), 2000)
         }
+    }
+
+    getTestData = () => {
+        setTimeout(async () => {
+            const nums = new Array<number>(15);
+
+            // reset the day
+            this.store.dispatch(carpoolAction.reset())
+            await this.delay()
+            
+            // queue 15 numbers
+            for(let i=0; i<15; i++) {
+                nums[i] = Util.randBetween(1,299)
+                this.store.dispatch(carpoolAction.laneAdd({ poolNumber: nums[i] }))
+                await this.delay()
+            }
+
+            // Call numbers
+            for(let i=0; i<8; i++) {
+                this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: nums[i] }))
+                await this.delay()
+            }
+
+            // Send the first 3 numbers
+            for(let i=0; i<3; i++) {
+                this.store.dispatch(carpoolAction.roomSend({ poolNumber: nums[i] }))
+                await this.delay()
+            }
+
+            // Recall the fourth number
+            this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: nums[3] }))
+            await this.delay()
+
+            // Exit two numbers
+            for(let i=0; i<2; i++) {
+                this.store.dispatch(carpoolAction.doorExit({ poolNumber: nums[i] }))
+                await this.delay()
+            }
+
+            // Gone one number
+            this.store.dispatch(carpoolAction.escortGone({ poolNumber: nums[0] }))
+        }, 1000)
     }
 
     getAPIurl() {

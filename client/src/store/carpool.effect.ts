@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { carpoolAction } from "./carpool.action";
 import { CarpoolService } from "./carpool.service";
-import { catchError, exhaustMap, map, of, tap } from "rxjs";
+import { catchError, exhaustMap, map, of, startWith, tap } from "rxjs";
 import { ApiException } from "../model/api.exception";
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +10,14 @@ export class CarpoolEffect {
     private actions$ = inject(Actions)
     private carpoolService = inject(CarpoolService)
 
+    public test$ = createEffect(() => this.actions$.pipe(
+        startWith(carpoolAction.test()),
+        ofType(carpoolAction.test),
+        tap(_action => this.carpoolService.getTestData())
+    ), { dispatch: false })
+
     public poll$ = createEffect(() => this.actions$.pipe(
+        startWith(carpoolAction.poll()),
         ofType(carpoolAction.poll),
         tap(_action => this.carpoolService.startPolling())
     ), { dispatch: false})

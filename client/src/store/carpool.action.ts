@@ -7,6 +7,7 @@ export const carpoolAction = createActionGroup({
     source: carpoolSource,
     events: {
         poll: emptyProps(),
+        test: emptyProps(),
         
         get: emptyProps(),
         get_success: props<CarpoolResponse>(),

@@ -1,10 +1,10 @@
 import { carpoolAction } from "./carpool.action";
 import { CarpoolEffect } from "./carpool.effect";
-import { carpoolFeature, selectCallImmediate, selectDoor, selectEscort, selectLane, selectRoom } from "./carpool.feature";
+import { carpoolFeature, selectAll, selectCallImmediate, selectErrorMessage } from "./carpool.feature";
 import { carpoolReducer } from "./carpool.reducer";
 import { CarpoolService } from "./carpool.service";
 import { CarpoolState } from "./carpool.state";
 
 export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolReducer, CarpoolService }
-export { selectDoor, selectEscort, selectLane, selectRoom, selectCallImmediate }
+export { selectAll, selectCallImmediate, selectErrorMessage }
 export type { CarpoolState }
