@@ -1,0 +1,11 @@
+@if(!token()) {
+    <!-- g_id_onload contains Google Identity Services settings -->
+    <div id="g_id_onload" data-auto_prompt="false"></div>
+    <!-- g_id_signin places the button on a page and supports customization -->
+    <div class="g_id_signin"></div>
+} @else {
+    <div>
+        <div class="name">{{ token().name }}</div>
+        <div class="email">{{ token().email }}</div>
+    </div>
+}

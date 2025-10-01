@@ -1,29 +1,46 @@
-import { Component, inject, NgZone, OnInit } from "@angular/core";
+import { Component, inject, AfterContentInit, signal } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { carpoolAction } from "../../store";
 
 declare const google: any;
+const data_client_id = "645008399704-qqnqru9a5ivoaus70nqg8nihucn2qruq.apps.googleusercontent.com";
 
 @Component({
     selector: 'car-google',
-    template: '<span id="google"></span>'
+    templateUrl: 'google.component.html',
+    styleUrl: 'google.component.scss'
 })
-export class GoogleComponent implements OnInit {
-    ngZone = inject(NgZone)
+export class GoogleComponent implements AfterContentInit {
     store = inject(Store)
+    token = signal<any>(null)
 
-    ngOnInit(): void {
+    ngAfterContentInit() {
+        const element = document.getElementById('g_id_onload')
+        element?.setAttribute('data-client_id', data_client_id);
         this.initializeGoogleSignIn();
+    }
+
+    decodeJWT(token: string) {
+        let base64Url = token.split(".")[1];
+        let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map(function (c) {
+                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join("")
+        );
+        return JSON.parse(jsonPayload);
     }
 
     initializeGoogleSignIn() {
         google.accounts.id.initialize({
-            client_id: '645008399704-qqnqru9a5ivoaus70nqg8nihucn2qruq.apps.googleusercontent.com',
+            client_id: data_client_id,
             callback: (response: any) => this.handleCredentialResponse(response)
         });
 
         google.accounts.id.renderButton(
-            document.getElementById('google'),
+            document.getElementById('g_id_signin'),
             { theme: 'outline', size: 'large' }  // customization attributes
         );
 
@@ -31,7 +48,15 @@ export class GoogleComponent implements OnInit {
     }
 
     handleCredentialResponse(response: any) {
-        // response.credential is the JWT token
-        this.store.dispatch(carpoolAction.token({ token: response.credential }))
+        console.log("Encoded JWT ID token: " + response.credential);
+        const responsePayload = this.decodeJWT(response.credential);
+        console.dir(responsePayload);
+        this.token.set({
+            email: responsePayload.email,
+            hd: responsePayload.hd,
+            name: responsePayload.name,
+            picture: responsePayload.picture,
+            sub: responsePayload.sub,
+        });
     }
 }
