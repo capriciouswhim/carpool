@@ -5,7 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { Store } from "@ngrx/store";
-import { carpoolAction } from "../../store";
+import { actions } from "../../store/actions";
 
 @Component({
     selector: 'car-pool-number',
@@ -39,11 +39,11 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
         }
     }
 
-    del = () => this.store.dispatch(carpoolAction.del({ poolNumber: this.typedPoolNumber().pool_number }));
-    call = () => this.store.dispatch(carpoolAction.callOne({ poolNumber: this.typedPoolNumber().pool_number }));
-    send = () => this.store.dispatch(carpoolAction.send({ poolNumber: this.typedPoolNumber().pool_number }));
-    escort = () => this.store.dispatch(carpoolAction.escort({ poolNumber: this.typedPoolNumber().pool_number }));
-    dispatch = () => this.store.dispatch(carpoolAction.dispatch({ poolNumber: this.typedPoolNumber().pool_number }));
+    del = () => this.store.dispatch(actions.del({ poolNumber: this.typedPoolNumber().pool_number }));
+    call = () => this.store.dispatch(actions.callOne({ poolNumber: this.typedPoolNumber().pool_number }));
+    exit = () => this.store.dispatch(actions.exit({ poolNumber: this.typedPoolNumber().pool_number }));
+    escort = () => this.store.dispatch(actions.escort({ poolNumber: this.typedPoolNumber().pool_number }));
+    dispatch = () => this.store.dispatch(actions.dispatch({ poolNumber: this.typedPoolNumber().pool_number }));
 
     getBorderStyle() {
         return this.typedPoolNumber().state.toLowerCase()
@@ -62,12 +62,12 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
 
     getHumanType() {
         switch(this.typedPoolNumber().state) {
-            case 'LANE':    return 'Car Arrived'
-            case 'CALL':    return 'Called'
+            case 'LANE':    return 'Arriving'
+            case 'CALL':    return 'Calling'
             case 'RECALL':  return 'Recalled'
-            case 'SEND':    return 'Student Sent'
-            case 'EXIT':    return 'Student Outside'
-            case 'GONE':    return 'Car Departed'
+            case 'SEND':    return 'Exiting'
+            case 'EXIT':    return 'Escorting'
+            case 'GONE':    return 'Departing'
         }
     }
 
@@ -113,7 +113,7 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
                 return false;
         }
     }
-    canSend() {
+    canExit() {
         // if pref show all options, return true
         switch(this.typedPoolNumber().state) {
             case 'LANE':
@@ -127,7 +127,7 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
                 return false;
         }
     }
-    canExit() {
+    canEscort() {
         // if pref show all options, return true
         switch(this.typedPoolNumber().state) {
             case 'LANE':

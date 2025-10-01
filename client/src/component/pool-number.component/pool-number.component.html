@@ -19,11 +19,11 @@
         <mat-icon>notification_important</mat-icon>
         <span>Recall</span>
     </button>
-    <button mat-menu-item class="menuitem" [class.show]="canSend()" (click)="send()">
+    <button mat-menu-item class="menuitem" [class.show]="canExit()" (click)="exit()">
         <mat-icon>follow_the_signs</mat-icon>
         <span>Send Student</span>
     </button>
-    <button mat-menu-item class="menuitem" [class.show]="canExit()" (click)="escort()">
+    <button mat-menu-item class="menuitem" [class.show]="canEscort()" (click)="escort()">
         <mat-icon>escalator_warning</mat-icon>
         <span>Escort Student</span>
     </button>

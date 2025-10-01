@@ -1,8 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { carpoolSelectAll } from "../../store";
 import { AsyncPipe } from "@angular/common";
 import { PoolNumberComponent } from "../../component/pool-number.component/pool-number.component";
+import { selectAll } from "../../store/feature";
 
 @Component({
     selector: 'car-monitor',
@@ -12,5 +12,5 @@ import { PoolNumberComponent } from "../../component/pool-number.component/pool-
 })
 export class MonitorPage {
     store = inject(Store)
-    nums$ = this.store.select(carpoolSelectAll)
+    nums$ = this.store.select(selectAll)
 }

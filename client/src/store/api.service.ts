@@ -1,13 +1,13 @@
 import { inject, Injectable } from "@angular/core";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Observable, Subscriber } from "rxjs";
-import { ApiException, CarpoolResponse } from "../../model";
+import { ApiException, ApiResponse } from "../model";
 import { Store } from "@ngrx/store";
-import { carpoolAction } from "./carpool.action";
-import { Util } from "../../util";
+import { actions } from "./actions";
+import { Util } from "../util";
 
 @Injectable({ providedIn: 'root' })
-export class CarpoolService {
+export class ApiService {
     private readonly store = inject(Store)
     private intervalHandle: number | null = null
 
@@ -17,7 +17,7 @@ export class CarpoolService {
 
     startPolling() {
         if(!this.intervalHandle) {
-            this.intervalHandle = setInterval(() => this.store.dispatch(carpoolAction.get()), 2000)
+            this.intervalHandle = setInterval(() => this.store.dispatch(actions.get()), 2000)
         }
     }
 
@@ -26,40 +26,40 @@ export class CarpoolService {
             const nums = new Array<number>(15);
 
             // reset the day
-            this.store.dispatch(carpoolAction.reset())
+            this.store.dispatch(actions.reset())
             await this.delay()
             
             // queue 15 numbers
             for(let i=0; i<15; i++) {
                 nums[i] = Util.randBetween(1,299)
-                this.store.dispatch(carpoolAction.add({ poolNumber: nums[i] }))
+                this.store.dispatch(actions.add({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Call numbers
             for(let i=0; i<8; i++) {
-                this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[i] }))
+                this.store.dispatch(actions.callOne({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Send the first 3 numbers
             for(let i=0; i<3; i++) {
-                this.store.dispatch(carpoolAction.send({ poolNumber: nums[i] }))
+                this.store.dispatch(actions.exit({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Recall the fourth number
-            this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[3] }))
+            this.store.dispatch(actions.callOne({ poolNumber: nums[3] }))
             await this.delay()
 
             // Exit two numbers
             for(let i=0; i<2; i++) {
-                this.store.dispatch(carpoolAction.escort({ poolNumber: nums[i] }))
+                this.store.dispatch(actions.escort({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Gone one number
-            this.store.dispatch(carpoolAction.dispatch({ poolNumber: nums[0] }))
+            this.store.dispatch(actions.dispatch({ poolNumber: nums[0] }))
         }, 1000)
     }
 
@@ -103,7 +103,7 @@ export class CarpoolService {
         }
     }
 
-    dispatch = <T>(method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', uri: string, data?: any) => new Observable<T>(o => {
+    apiCall = <T>(method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', uri: string, data?: any) => new Observable<T>(o => {
         const APIurl = this.getAPIurl()
         const url = `${APIurl}${uri}`
 
@@ -118,16 +118,16 @@ export class CarpoolService {
             .catch(reason => this.handleCatch(o, reason))
     })
 
-    get = () => this.dispatch<CarpoolResponse>('GET', '/')
-    reset = () => this.dispatch<CarpoolResponse>('DELETE', '/reset')
-    resetLane = () => this.dispatch<CarpoolResponse>('DELETE', '/')
-    laneAdd = (poolNumber: number) => this.dispatch<CarpoolResponse>('PUT', `/${poolNumber}`)
-    laneDel = (poolNumber: number) => this.dispatch<CarpoolResponse>('DELETE', `/${poolNumber}`)
-    doorCallOne = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/call`)
-    doorCallMany = (num: number) => this.dispatch<CarpoolResponse>('PATCH', `/call?n=${num}`)
-    doorCallAll = () => this.dispatch<CarpoolResponse>('PATCH', `/call/all`)
-    setOptionCallImmediate = (option: boolean) => this.dispatch<CarpoolResponse>('PUT', `/option/callImmediate?option=${option}`)
-    roomSend = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/send`)
-    doorExit = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/exit`)
-    escortGone = (poolNumber: number) => this.dispatch<CarpoolResponse>('PATCH', `/${poolNumber}/gone`)
+    get = () => this.apiCall<ApiResponse>('GET', '/')
+    reset = () => this.apiCall<ApiResponse>('DELETE', '/reset')
+    resetLane = () => this.apiCall<ApiResponse>('DELETE', '/')
+    add = (poolNumber: number) => this.apiCall<ApiResponse>('PUT', `/${poolNumber}`)
+    del = (poolNumber: number) => this.apiCall<ApiResponse>('DELETE', `/${poolNumber}`)
+    callOne = (poolNumber: number) => this.apiCall<ApiResponse>('PATCH', `/${poolNumber}/call`)
+    callMany = (num: number) => this.apiCall<ApiResponse>('PATCH', `/call?n=${num}`)
+    callAll = () => this.apiCall<ApiResponse>('PATCH', `/call/all`)
+    setOptionCallImmediate = (option: boolean) => this.apiCall<ApiResponse>('PUT', `/option/callImmediate?option=${option}`)
+    exit = (poolNumber: number) => this.apiCall<ApiResponse>('PATCH', `/${poolNumber}/send`)
+    escort = (poolNumber: number) => this.apiCall<ApiResponse>('PATCH', `/${poolNumber}/exit`)
+    dispatch = (poolNumber: number) => this.apiCall<ApiResponse>('PATCH', `/${poolNumber}/gone`)
 }

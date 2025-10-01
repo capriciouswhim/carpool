@@ -5,15 +5,16 @@ import { routes } from './app.routes';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { CarpoolEffect, carpoolFeature, settingsFeature } from '../store';
+import { Effects } from '../store/effects';
+import { feature } from '../store/feature';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideEffects([ CarpoolEffect ]),
-    provideStore({ carpool: carpoolFeature.reducer, settings: settingsFeature.reducer }),
+    provideEffects([ Effects ]),
+    provideStore({ app: feature.reducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
   ]
 };
