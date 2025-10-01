@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, signal, SimpleChanges } from "@angular/core";
+import { Component, inject, input, OnChanges, OnDestroy, signal, SimpleChanges } from "@angular/core";
 import { TypedPoolNumber } from "../../model";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
@@ -13,7 +13,7 @@ import { carpoolAction } from "../../store";
     templateUrl: 'pool-number.component.html',
     styleUrl: 'pool-number.component.scss'
 })
-export class PoolNumberComponent implements OnChanges {
+export class PoolNumberComponent implements OnChanges, OnDestroy {
     store = inject(Store)
     typedPoolNumber = input.required<TypedPoolNumber>()
     blink_interval = 250; // ms
@@ -27,8 +27,15 @@ export class PoolNumberComponent implements OnChanges {
             }, this.blink_interval)
         }
         if(this.blink_timer && this.typedPoolNumber().state !== 'RECALL') {
+            this.blink.set(false);
             clearInterval(this.blink_timer);
             this.blink_timer = null;
+        }
+    }
+
+    ngOnDestroy(): void {
+        if(this.blink_timer) {
+            clearInterval(this.blink_timer)
         }
     }
 
