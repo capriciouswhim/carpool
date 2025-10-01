@@ -1,4 +1,6 @@
 import { settingsAction } from "./settings.action";
-import { selectOverscan, settingsFeature } from "./settings.feature";
+import { settingsFeature } from "./settings.feature";
 
-export { settingsAction, settingsFeature, selectOverscan }
+import { selectOverscan as settingsSelectOverscan } from "./settings.feature"
+
+export { settingsAction, settingsFeature, settingsSelectOverscan }

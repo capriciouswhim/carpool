@@ -3,6 +3,24 @@
         <h2>Display</h2>
     </mat-card-header>
     <mat-card-content>
-        <mat-slide-toggle [checked]="overscan$ | async" (change)="onToggleOverscan($event)">&nbsp;Adjust for television overscan.</mat-slide-toggle>
+        <mat-slide-toggle [checked]="overscan$ | async" (change)="onToggleOverscan($event)">&nbsp;Adjust for television
+            overscan.</mat-slide-toggle>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <h2>Reset</h2>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="sidebyside murderbutton">
+            <button matFab extended [disabled]="!(haveData$ | async)" (click)="onResetToday()">
+                <mat-icon>cancel</mat-icon>
+                <div>Reset Today</div>
+            </button>
+            <div>
+                This will delete all data collected today, removing all cars from the lane
+                as if the day never happened.  <em>Please use with caution, usually when testing.</em>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>
