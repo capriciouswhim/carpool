@@ -1,4 +1,38 @@
-<div class="poolNumber" (dblclick) = "onDblClick($event)" [class]="getClass(poolNumber)">
-     <div class="human">{{ getHumanLabel(poolNumber) }}</div>
-     <div class="number">{{ poolNumber().pool_number }}</div>
+<div class="container" [ngClass]="getBorderStyle()" [class.blink]="blink()">
+    <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>{{ getIcon() }}</mat-icon></button>
+    <div class="labelgroup">
+        <div class="type">{{ getHumanType() }}</div>
+        <div class="number">{{ typedPoolNumber().pool_number }}</div>
+    </div>
 </div>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item class="menuitem" [class.show]="canCall()" (click)="call()">
+        <mat-icon>notifications</mat-icon>
+        <span>Call</span>
+    </button>
+    <button mat-menu-item class="menuitem" [class.show]="canRemove()" (click)="del()">
+        <mat-icon>delete</mat-icon>
+        <span>Remove</span>
+    </button>
+    <button mat-menu-item class="menuitem" [class.show]="canRecall()" (click)="call()">
+        <mat-icon>notification_important</mat-icon>
+        <span>Recall</span>
+    </button>
+    <button mat-menu-item class="menuitem" [class.show]="canSend()" (click)="send()">
+        <mat-icon>follow_the_signs</mat-icon>
+        <span>Send Student</span>
+    </button>
+    <button mat-menu-item class="menuitem" [class.show]="canExit()" (click)="escort()">
+        <mat-icon>escalator_warning</mat-icon>
+        <span>Escort Student</span>
+    </button>
+    <button mat-menu-item class="menuitem" [class.show]="canDispatch()" (click)="dispatch()">
+        <mat-icon>flight_takeoff</mat-icon>
+        <span>Dispatch Car</span>
+    </button>
+        <button mat-menu-item disabled class="menuitem" [class.show]="isGone()">
+        <mat-icon>no_crash</mat-icon>
+        <span>Has Left</span>
+    </button>
+</mat-menu>

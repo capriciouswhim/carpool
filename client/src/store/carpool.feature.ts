@@ -1,22 +1,32 @@
 import { createFeature, createSelector } from "@ngrx/store";
 import { carpoolReducer } from './carpool.reducer'
 import { carpoolSource } from './carpool.state'
+import { TypedPoolNumber } from "../model";
 
 export const carpoolFeature = createFeature({
   name: carpoolSource,
   reducer: carpoolReducer
 })
 
+function laneOrder(poolNumbers: TypedPoolNumber[]) {
+  return [...poolNumbers].sort((a,b) => a.sort.localeCompare(b.sort))
+}
+
+function numericOrder(poolNumbers: TypedPoolNumber[]) {
+  return [...poolNumbers].sort((a,b) => a.pool_number - b.pool_number)
+}
+
 export const selectAll = createSelector(carpoolFeature.selectCarpoolState, state => {
-  // TODO Group and Sort according to user preferences
   return [
-    ...state.lane,
-    ...state.call,
-    ...state.recall,
-    ...state.send,
-    ...state.exit,
-    ...state.gone
-  ].sort((a,b) => a.sort.localeCompare(b.sort))
+    ...laneOrder(state.lane),
+    ...numericOrder([
+      ...state.call,
+      ...state.recall
+    ]),
+    ...numericOrder(state.send),
+    ...numericOrder(state.exit),
+    ...numericOrder(state.gone)
+  ]
 })
 
 // export const _selectLane = carpoolFeature.selectLane

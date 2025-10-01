@@ -21,41 +21,40 @@ export const carpoolAction = createActionGroup({
         resetLane_success: props<CarpoolResponse>(),
         resetLane_failure: props<ApiException>(),
 
-        laneAdd: props<{ poolNumber: number }>(),
-        laneAdd_success: props<CarpoolResponse>(),
-        laneAdd_failure: props<ApiException>(),
+        add: props<{ poolNumber: number }>(),
+        add_success: props<CarpoolResponse>(),
+        add_failure: props<ApiException>(),
 
-        laneDel: props<{ poolNumber: number }>(),
-        laneDel_success: props<CarpoolResponse>(),
-        laneDel_failure: props<ApiException>(),
+        del: props<{ poolNumber: number }>(),
+        del_success: props<CarpoolResponse>(),
+        del_failure: props<ApiException>(),
 
-        doorCallOne: props<{ poolNumber: number }>(),
-        doorCallOne_success: props<CarpoolResponse>(),
-        doorCallOne_failure: props<ApiException>(),
+        callOne: props<{ poolNumber: number }>(),
+        callOne_success: props<CarpoolResponse>(),
+        callOne_failure: props<ApiException>(),
 
-        doorCallMany: props<{ num: number }>(),
-        doorCallMany_success: props<CarpoolResponse>(),
-        doorCallMany_failure: props<ApiException>(),
+        callMany: props<{ num: number }>(),
+        callMany_success: props<CarpoolResponse>(),
+        callMany_failure: props<ApiException>(),
 
-        doorCallAll: emptyProps(),
-        doorCallAll_success: props<CarpoolResponse>(),
-        doorCallAll_failure: props<ApiException>(),
+        callAll: emptyProps(),
+        callAll_success: props<CarpoolResponse>(),
+        callAll_failure: props<ApiException>(),
 
         setOptionCallImmediate: props<{ option: boolean }>(),
         setOptionCallImmediate_success: props<CarpoolResponse>(),
         setOptionCallImmediate_failure: props<ApiException>(),
 
-        roomSend: props<{ poolNumber: number }>(),
-        roomSend_success: props<CarpoolResponse>(),
-        roomSend_failure: props<ApiException>(),
+        send: props<{ poolNumber: number }>(),
+        send_success: props<CarpoolResponse>(),
+        send_failure: props<ApiException>(),
 
-        doorExit: props<{ poolNumber: number }>(),
-        doorExit_success: props<CarpoolResponse>(),
-        doorExit_failure: props<ApiException>(),
+        escort: props<{ poolNumber: number }>(),
+        escort_success: props<CarpoolResponse>(),
+        escort_failure: props<ApiException>(),
 
-        escortGone: props<{ poolNumber: number }>(),
-        escortGone_success: props<CarpoolResponse>(),
-        escortGone_failure: props<ApiException>(),
-
+        dispatch: props<{ poolNumber: number }>(),
+        dispatch_success: props<CarpoolResponse>(),
+        dispatch_failure: props<ApiException>()
     }
 })

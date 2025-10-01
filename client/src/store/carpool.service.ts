@@ -32,34 +32,34 @@ export class CarpoolService {
             // queue 15 numbers
             for(let i=0; i<15; i++) {
                 nums[i] = Util.randBetween(1,299)
-                this.store.dispatch(carpoolAction.laneAdd({ poolNumber: nums[i] }))
+                this.store.dispatch(carpoolAction.add({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Call numbers
             for(let i=0; i<8; i++) {
-                this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: nums[i] }))
+                this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Send the first 3 numbers
             for(let i=0; i<3; i++) {
-                this.store.dispatch(carpoolAction.roomSend({ poolNumber: nums[i] }))
+                this.store.dispatch(carpoolAction.send({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Recall the fourth number
-            this.store.dispatch(carpoolAction.doorCallOne({ poolNumber: nums[3] }))
+            this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[3] }))
             await this.delay()
 
             // Exit two numbers
             for(let i=0; i<2; i++) {
-                this.store.dispatch(carpoolAction.doorExit({ poolNumber: nums[i] }))
+                this.store.dispatch(carpoolAction.escort({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Gone one number
-            this.store.dispatch(carpoolAction.escortGone({ poolNumber: nums[0] }))
+            this.store.dispatch(carpoolAction.dispatch({ poolNumber: nums[0] }))
         }, 1000)
     }
 

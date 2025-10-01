@@ -1,0 +1,7 @@
+:host {
+    flex: auto; margin: 0 1dvh;
+    display: flex; gap: 1dvh;
+    flex-direction: row; flex-wrap: wrap;
+    justify-content: space-between;
+    place-content: center;
+}
