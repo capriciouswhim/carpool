@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from '@angular/material/menu'
 import { MatToolbarModule } from '@angular/material/toolbar'
@@ -7,7 +8,7 @@ import { GoogleComponent } from '../google.component/google.component';
 
 @Component({
   selector: 'car-header',
-  imports: [GoogleComponent, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule],
+  imports: [GoogleComponent, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule, RouterLink, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

@@ -1,3 +1,9 @@
+@use '@angular/material' as mat;
+
 .spacer {
     flex: auto;
+}
+
+.active {
+    color: var(--mat-sys-primary)
 }
