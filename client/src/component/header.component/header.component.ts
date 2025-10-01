@@ -35,4 +35,14 @@ export class HeaderComponent {
         }
       })
   }
+
+  eggs = signal<number[]>([]);
+  egg() {
+    this.eggs.set([0])
+  }
+
+  onEgg() {
+    this.eggs.set([])
+    this.router.navigateByUrl('/test')
+  }
 }

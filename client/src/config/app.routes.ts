@@ -6,5 +6,6 @@ export const routes: Routes = [
     { path: 'monitor', loadComponent: () => import('../page/monitor.page/monitor.page').then(m => m.MonitorPage) },
     { path: 'room', redirectTo: 'monitor' }, // Backwards Compatibility (TODO Deprecate in v3.7)
     { path: 'settings', loadComponent: () => import('../page/settings.page/settings.page').then(m => m.SettingsPage) },
+    { path: 'test', loadComponent: () => import('../page/test.page/test.page').then(m => m.TestPage) },
     { path: '', redirectTo: 'monitor', pathMatch: 'full' }
-];
+]
