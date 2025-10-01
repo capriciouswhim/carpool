@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { selectAll } from "../../store/carpool.feature";
+import { selectAll } from "../../store";
 import { AsyncPipe } from "@angular/common";
 import { PoolNumberComponent } from "../../component/pool-number.component/pool-number.component";
 
