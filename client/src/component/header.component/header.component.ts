@@ -28,6 +28,9 @@ export class HeaderComponent {
           case '/departures':
             this.title.set('Departures')
             break;
+          case '/settings':
+            this.title.set('Settings')
+            break;
           default:
             this.title.set('Carpool')
         }
