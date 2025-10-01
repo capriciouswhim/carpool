@@ -1,4 +1,4 @@
-import { Component, inject, AfterContentInit, signal } from "@angular/core";
+import { Component, inject, signal, AfterViewInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 declare const google: any;
@@ -9,14 +9,16 @@ const data_client_id = "645008399704-qqnqru9a5ivoaus70nqg8nihucn2qruq.apps.googl
     templateUrl: 'google.component.html',
     styleUrl: 'google.component.scss'
 })
-export class GoogleComponent implements AfterContentInit {
+export class GoogleComponent implements AfterViewInit {
     store = inject(Store)
     token = signal<any>(null)
 
-    ngAfterContentInit() {
-        const element = document.getElementById('g_id_onload')
-        element?.setAttribute('data-client_id', data_client_id);
-        this.initializeGoogleSignIn();
+    ngAfterViewInit() {
+        // window.setTimeout(() => {
+            const element = document.getElementById('g_id_onload')
+            element?.setAttribute('data-client_id', data_client_id);
+            this.initializeGoogleSignIn();
+        // },1000)
     }
 
     decodeJWT(token: string) {
@@ -40,10 +42,9 @@ export class GoogleComponent implements AfterContentInit {
         });
 
         google.accounts.id.renderButton(
-            document.getElementById('g_id_signin'),
-            { theme: 'outline', size: 'large' }  // customization attributes
-        );
+            document.getElementById('g_id_signin'),{
 
+        });
         google.accounts.id.prompt(); // also display the One Tap dialog
     }
 
