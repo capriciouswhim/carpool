@@ -9,11 +9,15 @@ export const carpoolFeature = createFeature({
 })
 
 function laneOrder(poolNumbers: TypedPoolNumber[]) {
-  return [...poolNumbers].sort((a,b) => a.sort.localeCompare(b.sort))
+  return [...poolNumbers].sort((a,b) => b.sort.localeCompare(a.sort))
 }
 
 function numericOrder(poolNumbers: TypedPoolNumber[]) {
   return [...poolNumbers].sort((a,b) => a.pool_number - b.pool_number)
+}
+
+function reverseNumericOrder(poolNumbers: TypedPoolNumber[]) {
+  return [...poolNumbers].sort((a,b) => b.pool_number - a.pool_number)
 }
 
 export const selectHaveData = createSelector(carpoolFeature.selectCarpoolState, state => {
@@ -30,6 +34,34 @@ export const selectAll = createSelector(carpoolFeature.selectCarpoolState, state
     ...numericOrder(state.send),
     ...numericOrder(state.exit),
     ...numericOrder(state.gone)
+  ]
+})
+
+export const selectLane = createSelector(carpoolFeature.selectCarpoolState, state => {
+  return [
+    ...laneOrder([
+      ...state.lane,
+      ...state.call,
+      ...state.recall
+    ]),
+    ...numericOrder(state.send),
+    ...numericOrder(state.exit),
+    ...numericOrder(state.gone)
+  ]
+})
+
+export const selectDoor = createSelector(carpoolFeature.selectCarpoolState, state => {
+  return [
+    ...reverseNumericOrder([
+      ...state.send,
+      ...state.exit,
+      ...state.gone
+    ]),
+    ...laneOrder([
+      ...state.call,
+      ...state.recall,
+      ...state.lane
+    ])
   ]
 })
 

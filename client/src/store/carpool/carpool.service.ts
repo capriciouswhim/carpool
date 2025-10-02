@@ -23,43 +23,47 @@ export class CarpoolService {
 
     getTestData = () => {
         setTimeout(async () => {
-            const nums = new Array<number>(15);
+            const n = 8
+            const nums = new Array<number>(n);
 
             // reset the day
             this.store.dispatch(carpoolAction.reset())
             await this.delay()
             
-            // queue 15 numbers
-            for(let i=0; i<15; i++) {
+            // queue n numbers
+            for(let i=0; i<n; i++) {
                 nums[i] = Util.randBetween(1,299)
                 this.store.dispatch(carpoolAction.add({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
-            // Call numbers
-            for(let i=0; i<8; i++) {
+            // Call n-1 numbers
+            for(let i=1; i<n; i++) {
                 this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
-            // Send the first 3 numbers
-            for(let i=0; i<3; i++) {
+            // Send n-3 numbers
+            for(let i=3; i<n; i++) {
                 this.store.dispatch(carpoolAction.send({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
-            // Recall the fourth number
-            this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[3] }))
+            // Recall the third number
+            this.store.dispatch(carpoolAction.callOne({ poolNumber: nums[2] }))
             await this.delay()
 
-            // Exit two numbers
-            for(let i=0; i<2; i++) {
+            // Exit n-4 numbers
+            for(let i=4; i<n; i++) {
                 this.store.dispatch(carpoolAction.exit({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
-            // Gone one number
-            this.store.dispatch(carpoolAction.gone({ poolNumber: nums[0] }))
+            // Gone n-5 numbers
+            for(let i=5; i<n; i++) {
+                this.store.dispatch(carpoolAction.gone({ poolNumber: nums[i] }))
+                await this.delay()
+            }
         }, 1000)
     }
 

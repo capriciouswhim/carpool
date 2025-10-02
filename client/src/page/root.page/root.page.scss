@@ -11,10 +11,14 @@ header {
 main {
     grid-area: main;
     display: flex; flex-direction: column;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 footer {
     grid-area: footer;
     padding: 1dvh;
+}
+
+router-outlet {
+    display: none;
 }

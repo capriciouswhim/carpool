@@ -1,1 +1,6 @@
-lane page
+<div class="queue">
+    @for(typedPoolNumber of (nums$ | async); track typedPoolNumber.pool_number) {
+        <car-pool-number [typedPoolNumber]="typedPoolNumber"></car-pool-number>
+    }
+</div>
+<car-keypad></car-keypad>

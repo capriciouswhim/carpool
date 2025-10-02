@@ -1,6 +1,6 @@
 <div class="keypad">
-    <mat-form-field class="wide" appearance="outline">
-        <mat-label>Carpool Number</mat-label>
+    <mat-form-field class="wide" appearance="outline" floatLabel="always">
+        <mat-label>enter carpool numbers</mat-label>
         <input matInput [(ngModel)]="value" (keydown)="onKeydown($event)">
     </mat-form-field>
 
@@ -22,9 +22,9 @@
     <div></div>
     <button matButton="outlined" (dblclick)="onButton(-2)" class="special">+4</button>
 
-    <button matButton="outlined" (click)="onButton('b')" (dblclick)="onReset()">⌫</button>
+    <button matButton="outlined" (click)="onButton('b')">⌫</button>
     <button matButton="filled"   (click)="onButton(0)"  >0</button>
-    <button matButton="outlined" (click)="onButton('e')" (dblclick)="onClear()">⏎</button>
+    <button matButton="outlined" (click)="onButton('e')">⏎</button>
     <div></div>
     <button [matButton]="option() ? 'filled' : 'outlined'" (dblclick)="onButton(-3)" class="special">auto</button>
 </div>

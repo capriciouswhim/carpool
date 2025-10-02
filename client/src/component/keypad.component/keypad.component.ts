@@ -21,7 +21,7 @@ export class KeypadComponent {
 
   constructor() {
       this.store.select(carpoolSelectCallImmediate).subscribe(o => {
-      this.option.set(o)
+        this.option.set(o)
       })
   }
 
@@ -31,16 +31,6 @@ export class KeypadComponent {
       const newValue = Math.floor(currentValue / 10)
       this.value.set(newValue !== 0 ? newValue : null)
     }
-  }
-
-  onReset() {
-    // this.value.set(null);
-    // this.store.dispatch(carpoolAction.reset());    
-  }
-
-  onClear() {
-    // this.value.set(null);
-    // this.store.dispatch(carpoolAction.resetLane());
   }
 
   onDigit(keyValue: number) {
@@ -87,9 +77,6 @@ export class KeypadComponent {
         case 'Backspace':
           this.onBackspace();
           return;
-        case 'Delete':
-          this.onClear();
-          break;
         case 'Enter':
           this.onEnter();
           break;
