@@ -37,6 +37,16 @@ export const selectAll = createSelector(carpoolFeature.selectCarpoolState, state
   ]
 })
 
+export const selectRoom = createSelector(carpoolFeature.selectCarpoolState, state => {
+  return [
+    ...numericOrder([
+      ...state.call,
+      ...state.recall
+    ]),
+    ...numericOrder(state.send)
+  ]
+})
+
 export const selectLane = createSelector(carpoolFeature.selectCarpoolState, state => {
   return [
     ...laneOrder([

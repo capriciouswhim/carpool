@@ -1,7 +1,7 @@
 // Carpool Feature
 
-import { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData } from './carpool'
-export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData }
+import { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectRoom, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData } from './carpool'
+export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectRoom, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData }
 
 // Settings Feature
 
