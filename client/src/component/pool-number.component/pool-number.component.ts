@@ -42,8 +42,8 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
     del = () => this.store.dispatch(carpoolAction.del({ poolNumber: this.typedPoolNumber().pool_number }));
     call = () => this.store.dispatch(carpoolAction.callOne({ poolNumber: this.typedPoolNumber().pool_number }));
     send = () => this.store.dispatch(carpoolAction.send({ poolNumber: this.typedPoolNumber().pool_number }));
-    escort = () => this.store.dispatch(carpoolAction.escort({ poolNumber: this.typedPoolNumber().pool_number }));
-    dispatch = () => this.store.dispatch(carpoolAction.dispatch({ poolNumber: this.typedPoolNumber().pool_number }));
+    escort = () => this.store.dispatch(carpoolAction.exit({ poolNumber: this.typedPoolNumber().pool_number }));
+    dispatch = () => this.store.dispatch(carpoolAction.gone({ poolNumber: this.typedPoolNumber().pool_number }));
 
     getBorderStyle() {
         return this.typedPoolNumber().state.toLowerCase()

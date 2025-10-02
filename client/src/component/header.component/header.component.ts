@@ -21,11 +21,11 @@ export class HeaderComponent {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         switch(event.urlAfterRedirects) {
-          case '/arrivals':
-            this.title.set('Arrivals')
+          case '/lane':
+            this.title.set('Carpool Lane')
             break;
-          case '/departures':
-            this.title.set('Departures')
+          case '/door':
+            this.title.set('Carpool Door')
             break;
           case '/settings':
             this.title.set('Settings')

@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
-import { carpoolAction } from '../../store/carpool.action';
-import { selectCallImmediate } from '../../store';
+import { carpoolAction } from '../../store';
+import { carpoolSelectCallImmediate } from '../../store';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class KeypadComponent {
   value = signal<number | null>(null)
 
   constructor() {
-      this.store.select(selectCallImmediate).subscribe(o => {
+      this.store.select(carpoolSelectCallImmediate).subscribe(o => {
       this.option.set(o)
       })
   }
@@ -51,7 +51,7 @@ export class KeypadComponent {
     const currentValue = this.value() ?? 0;
     this.value.set(null);
     if(currentValue !== 0) {
-      this.store.dispatch(carpoolAction.laneAdd({ poolNumber: currentValue }))
+      this.store.dispatch(carpoolAction.add({ poolNumber: currentValue }))
     }
   }
 
@@ -64,10 +64,10 @@ export class KeypadComponent {
         this.onEnter();
         break;
       case -1: // call all
-        this.store.dispatch(carpoolAction.doorCallAll())
+        this.store.dispatch(carpoolAction.callAll())
         break;
       case -2: // call + 4
-        this.store.dispatch(carpoolAction.doorCallMany({ num: 4 }))
+        this.store.dispatch(carpoolAction.callMany({ num: 4 }))
         break;
       case -3: // call auto
         this.store.dispatch(carpoolAction.setOptionCallImmediate({ option: !this.option() }))

@@ -54,12 +54,12 @@ export class CarpoolService {
 
             // Exit two numbers
             for(let i=0; i<2; i++) {
-                this.store.dispatch(carpoolAction.escort({ poolNumber: nums[i] }))
+                this.store.dispatch(carpoolAction.exit({ poolNumber: nums[i] }))
                 await this.delay()
             }
 
             // Gone one number
-            this.store.dispatch(carpoolAction.dispatch({ poolNumber: nums[0] }))
+            this.store.dispatch(carpoolAction.gone({ poolNumber: nums[0] }))
         }, 1000)
     }
 

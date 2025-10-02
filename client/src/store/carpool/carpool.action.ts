@@ -48,12 +48,12 @@ export const carpoolAction = createActionGroup({
         send_success: props<CarpoolResponse>(),
         send_failure: props<ApiException>(),
 
-        escort: props<{ poolNumber: number }>(),
-        escort_success: props<CarpoolResponse>(),
-        escort_failure: props<ApiException>(),
+        exit: props<{ poolNumber: number }>(),
+        exit_success: props<CarpoolResponse>(),
+        exit_failure: props<ApiException>(),
 
-        dispatch: props<{ poolNumber: number }>(),
-        dispatch_success: props<CarpoolResponse>(),
-        dispatch_failure: props<ApiException>()
+        gone: props<{ poolNumber: number }>(),
+        gone_success: props<CarpoolResponse>(),
+        gone_failure: props<ApiException>()
     }
 })

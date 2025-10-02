@@ -103,18 +103,18 @@ export class CarpoolEffect {
     )
 
     public doorExit$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.escort),
+        ofType(carpoolAction.exit),
         exhaustMap(action => this.carpoolService.doorExit(action.poolNumber).pipe(
-            map(response => carpoolAction.escort_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.escort_failure(apiException)))
+            map(response => carpoolAction.exit_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.exit_failure(apiException)))
         )))
     )
 
     public escortGone$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.dispatch),
+        ofType(carpoolAction.gone),
         exhaustMap(action => this.carpoolService.escortGone(action.poolNumber).pipe(
-            map(response => carpoolAction.dispatch_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.dispatch_failure(apiException)))
+            map(response => carpoolAction.gone_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.gone_failure(apiException)))
         )))
     )
 }

@@ -15,8 +15,8 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.callAll_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.setOptionCallImmediate_success,(s,a) => updateHistory(s,a)),
     on(carpoolAction.send_success,(s,a) => updateHistory(s,a)),
-    on(carpoolAction.escort_success,(s,a) => updateHistory(s,a)),
-    on(carpoolAction.dispatch_success,(s,a) => updateHistory(s,a)),
+    on(carpoolAction.exit_success,(s,a) => updateHistory(s,a)),
+    on(carpoolAction.gone_success,(s,a) => updateHistory(s,a)),
 
     on(carpoolAction.get_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.reset_failure,(s,a) => updateFailure(s,a)),
@@ -28,8 +28,8 @@ export const carpoolReducer = createReducer(
     on(carpoolAction.callAll_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.setOptionCallImmediate_failure,(s,a) => updateFailure(s,a)),
     on(carpoolAction.send_failure,(s,a) => updateFailure(s,a)),
-    on(carpoolAction.escort_failure,(s,a) => updateFailure(s,a)),
-    on(carpoolAction.dispatch_failure,(s,a) => updateFailure(s,a))
+    on(carpoolAction.exit_failure,(s,a) => updateFailure(s,a)),
+    on(carpoolAction.gone_failure,(s,a) => updateFailure(s,a))
 )
 
 function updateHistory(state: CarpoolState, action: CarpoolResponse): CarpoolState {
