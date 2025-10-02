@@ -1,10 +1,6 @@
-<div class="superior">
-    <div class="content">
-        @for(poolNumber of poolNumbers$ | async; track poolNumber.pool_number) {
-            <car-pool-number [poolNumber]="poolNumber" (invoke)="onInvoke(poolNumber)"></car-pool-number>
-        }
-    </div>
+<div class="queue">
+    @for(typedPoolNumber of (nums$ | async); track typedPoolNumber.pool_number) {
+        <car-pool-number [typedPoolNumber]="typedPoolNumber"></car-pool-number>
+    }
 </div>
-<div class="inferior">
-    <car-keypad></car-keypad>
-</div>
+<car-keypad></car-keypad>

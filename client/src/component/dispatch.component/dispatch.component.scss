@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 :host {
-    flex: auto;
+    flex: none;
     display: flex; flex-direction: row;
     justify-content: space-around;
 }
@@ -11,15 +11,4 @@
     display: grid;
     grid-template-columns: repeat(3, 2cm);
     gap: 1rem;
-}
-
-.wide {
-    grid-column-start: 1;
-    grid-column-end: 4;
-
-    text-align: center;
-
-    input {
-        text-align: center;
-    }
 }

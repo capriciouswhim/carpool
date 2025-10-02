@@ -1,10 +1,9 @@
-import { carpoolAction } from "./carpool.action";
-import { CarpoolEffect } from "./carpool.effect";
-import { carpoolFeature, selectCallImmediate, selectDoor, selectEscort, selectLane, selectRoom } from "./carpool.feature";
-import { carpoolReducer } from "./carpool.reducer";
-import { CarpoolService } from "./carpool.service";
-import { CarpoolState } from "./carpool.state";
+// Carpool Feature
 
-export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolReducer, CarpoolService }
-export { selectDoor, selectEscort, selectLane, selectRoom, selectCallImmediate }
-export type { CarpoolState }
+import { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData } from './carpool'
+export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpoolSelectLane, carpoolSelectDoor, carpoolSelectCallImmediate, carpoolSelectErrorMessage, carpoolSelectHaveData }
+
+// Settings Feature
+
+import { settingsAction, settingsFeature, settingsSelectOverscan } from './settings/index'
+export { settingsAction, settingsFeature, settingsSelectOverscan }

@@ -1,6 +1,6 @@
 <div class="keypad">
-    <mat-form-field class="wide" appearance="outline">
-        <mat-label>Carpool Number</mat-label>
+    <mat-form-field class="wide" appearance="outline" floatLabel="always">
+        <mat-label>enter carpool numbers</mat-label>
         <input matInput [(ngModel)]="value" (keydown)="onKeydown($event)">
     </mat-form-field>
 

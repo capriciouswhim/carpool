@@ -1,23 +1,15 @@
 :host {
-    height: 100%; display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-    grid-template-areas: 'superior' 'inferior';
-}
-
-.superior {
-    grid-area: superior;
-    margin-bottom: 1dvh;
-    overflow: auto;
-
-    display: flex; flex-direction: column-reverse;
-}
-
-.content {
+    flex: auto; height: 100%;
     display: flex; flex-direction: column;
-    align-items: center; gap: 0.25cm;
 }
 
-.inferior {
-    grid-area: inferior;
+.queue {
+    flex: auto;
+    display: flex; flex-direction: column-reverse;
+    align-items: center; gap: 1dvh;
+    overflow-y: auto; margin-bottom: 1dvh;
+}
+
+car-keypad {
+    flex: 0;
 }

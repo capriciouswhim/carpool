@@ -1,18 +1,16 @@
-import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { DispatchComponent, PoolNumberComponent } from '../../component';
-import { TypedPoolNumber } from '../../model';
-import { BasePage } from '../../page';
+import { Component, inject } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { carpoolSelectDoor } from "../../store";
+import { AsyncPipe } from "@angular/common";
+import { DispatchComponent, PoolNumberComponent } from "../../component";
 
 @Component({
-  selector: 'car-door-page',
-  imports: [ AsyncPipe, PoolNumberComponent, DispatchComponent ],
-  templateUrl: './door.page.html',
-  styleUrl: './door.page.scss'
+    selector: 'car-door',
+    imports: [AsyncPipe,DispatchComponent,PoolNumberComponent],
+    templateUrl: 'door.page.html',
+    styleUrl: 'door.page.scss'
 })
-export class DoorPage extends BasePage {
-  
-  onInvoke = (poolNumber: TypedPoolNumber) =>
-    this.store.dispatch(this.marshal.nextStep('DOOR', poolNumber))
-
+export class DoorPage {
+    store = inject(Store)
+    nums$ = this.store.select(carpoolSelectDoor)
 }

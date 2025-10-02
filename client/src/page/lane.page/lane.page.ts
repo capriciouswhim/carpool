@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { KeypadComponent, PoolNumberComponent } from '../../component';
-import { BasePage } from '../base.page/base.page';
-import { TypedPoolNumber } from '../../model';
+import { Component, inject } from "@angular/core";
+import { KeypadComponent } from "../../component";
+import { Store } from "@ngrx/store";
+import { carpoolSelectLane } from "../../store";
+import { AsyncPipe } from "@angular/common";
+import { PoolNumberComponent } from "../../component";
 
 @Component({
-  selector: 'car-lane-page',
-  imports: [AsyncPipe, KeypadComponent, PoolNumberComponent],
-  templateUrl: './lane.page.html',
-  styleUrl: './lane.page.scss'
+    selector: 'car-lane',
+    imports: [AsyncPipe,KeypadComponent,PoolNumberComponent],
+    templateUrl: 'lane.page.html',
+    styleUrl: 'lane.page.scss'
 })
-export class LanePage extends BasePage {
-
-  onInvoke = (poolNumber: TypedPoolNumber) =>
-    this.store.dispatch(this.marshal.nextStep('LANE', poolNumber))
-
+export class LanePage {
+    store = inject(Store)
+    nums$ = this.store.select(carpoolSelectLane)
 }

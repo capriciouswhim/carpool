@@ -2,15 +2,22 @@ import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { carpoolAction } from "./carpool.action";
 import { CarpoolService } from "./carpool.service";
-import { catchError, exhaustMap, map, of, tap } from "rxjs";
-import { ApiException } from "../model/api.exception";
+import { catchError, exhaustMap, map, of, startWith, tap } from "rxjs";
+import { ApiException } from "../../model/api.exception";
 
 @Injectable({ providedIn: 'root' })
 export class CarpoolEffect {
     private actions$ = inject(Actions)
     private carpoolService = inject(CarpoolService)
 
+    public test$ = createEffect(() => this.actions$.pipe(
+        startWith(carpoolAction.test()),
+        ofType(carpoolAction.test),
+        tap(_action => this.carpoolService.getTestData())
+    ), { dispatch: false })
+
     public poll$ = createEffect(() => this.actions$.pipe(
+        startWith(carpoolAction.poll()),
         ofType(carpoolAction.poll),
         tap(_action => this.carpoolService.startPolling())
     ), { dispatch: false})
@@ -40,42 +47,42 @@ export class CarpoolEffect {
     )
 
     public laneAdd$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.laneAdd),
+        ofType(carpoolAction.add),
         exhaustMap(action => this.carpoolService.laneAdd(action.poolNumber).pipe(
-            map(response => carpoolAction.laneAdd_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.laneAdd_failure(apiException)))
+            map(response => carpoolAction.add_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.add_failure(apiException)))
         )))
     )
 
     public laneDel$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.laneDel),
+        ofType(carpoolAction.del),
         exhaustMap(action => this.carpoolService.laneDel(action.poolNumber).pipe(
-            map(response => carpoolAction.laneDel_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.laneDel_failure(apiException)))
+            map(response => carpoolAction.del_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.del_failure(apiException)))
         )))
     )
 
     public doorCallOne$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.doorCallOne),
+        ofType(carpoolAction.callOne),
         exhaustMap(action => this.carpoolService.doorCallOne(action.poolNumber).pipe(
-            map(response => carpoolAction.doorCallOne_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.doorCallOne_failure(apiException)))
+            map(response => carpoolAction.callOne_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.callOne_failure(apiException)))
         )))
     )
 
     public doorCallMany$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.doorCallMany),
+        ofType(carpoolAction.callMany),
         exhaustMap(action => this.carpoolService.doorCallMany(action.num).pipe(
-            map(response => carpoolAction.doorCallMany_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.doorCallMany_failure(apiException)))
+            map(response => carpoolAction.callMany_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.callMany_failure(apiException)))
         )))
     )
 
     public doorCallAll$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.doorCallAll),
+        ofType(carpoolAction.callAll),
         exhaustMap(action => this.carpoolService.doorCallAll().pipe(
-            map(response => carpoolAction.doorCallAll_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.doorCallAll_failure(apiException)))
+            map(response => carpoolAction.callAll_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.callAll_failure(apiException)))
         )))
     )
 
@@ -88,26 +95,26 @@ export class CarpoolEffect {
     )
 
     public roomSend$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.roomSend),
+        ofType(carpoolAction.send),
         exhaustMap(action => this.carpoolService.roomSend(action.poolNumber).pipe(
-            map(response => carpoolAction.roomSend_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.roomSend_failure(apiException)))
+            map(response => carpoolAction.send_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.send_failure(apiException)))
         )))
     )
 
     public doorExit$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.doorExit),
+        ofType(carpoolAction.exit),
         exhaustMap(action => this.carpoolService.doorExit(action.poolNumber).pipe(
-            map(response => carpoolAction.doorExit_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.doorExit_failure(apiException)))
+            map(response => carpoolAction.exit_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.exit_failure(apiException)))
         )))
     )
 
     public escortGone$ = createEffect(() => this.actions$.pipe(
-        ofType(carpoolAction.escortGone),
+        ofType(carpoolAction.gone),
         exhaustMap(action => this.carpoolService.escortGone(action.poolNumber).pipe(
-            map(response => carpoolAction.escortGone_success(response)),
-            catchError((apiException: ApiException) => of(carpoolAction.escortGone_failure(apiException)))
+            map(response => carpoolAction.gone_success(response)),
+            catchError((apiException: ApiException) => of(carpoolAction.gone_failure(apiException)))
         )))
     )
 }

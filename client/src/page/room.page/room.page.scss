@@ -1,14 +1,7 @@
 :host {
-    height: 100%; display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas: 'superior' 'inferior';
+    flex: auto; margin: 0 1dvh;
+    display: flex; gap: 1dvh;
+    flex-direction: row; flex-wrap: wrap;
+    justify-content: space-between;
     place-content: center;
-}
-
-.superior {
-    display: flex; flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center; align-items: center;
-    gap: 1dvh;
 }

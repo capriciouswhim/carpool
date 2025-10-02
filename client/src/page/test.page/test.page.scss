@@ -1,3 +1,24 @@
+:host {
+    padding: 0 1dvh;
+}
+
+cite, q {
+    display: block;    
+    font-size: xx-small;
+    margin: 0 5dvw; border: none; padding: 0;
+    line-height: 1.2;
+    max-width: 50dvw;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    display: inline-block;
+    min-width: 3em;
+}
+
 p {
     text-align: justify;
 }

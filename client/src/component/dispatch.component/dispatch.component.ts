@@ -1,7 +1,7 @@
 import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
-import { carpoolAction, selectCallImmediate } from '../../store';
+import { carpoolAction, carpoolSelectCallImmediate } from '../../store';
 
 @Component({
   selector: 'car-dispatch',
@@ -15,7 +15,7 @@ export class DispatchComponent {
   value = signal<number | null>(null)
 
   constructor() {
-     this.store.select(selectCallImmediate).subscribe(o => {
+     this.store.select(carpoolSelectCallImmediate).subscribe(o => {
       this.option.set(o)
      })
   }
@@ -23,11 +23,11 @@ export class DispatchComponent {
   onButton(button: number) {
     switch(button) {
       case -1:
-        this.store.dispatch(carpoolAction.doorCallAll())
+        this.store.dispatch(carpoolAction.callAll())
         break;
 
       case 4:
-        this.store.dispatch(carpoolAction.doorCallMany({ num: 4 }))
+        this.store.dispatch(carpoolAction.callMany({ num: 4 }))
         break;
 
       case 0:

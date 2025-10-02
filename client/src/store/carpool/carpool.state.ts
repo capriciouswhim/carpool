@@ -1,5 +1,4 @@
-import { CarpoolResponse, TypedPoolNumber } from "../model"
-import { carpoolReducer } from "./carpool.reducer"
+import { CarpoolResponse, TypedPoolNumber } from "../../model"
 
 export const carpoolSource = 'carpool'
 
@@ -10,7 +9,8 @@ export interface CarpoolState extends CarpoolResponse {
   send: TypedPoolNumber[],
   exit: TypedPoolNumber[],
   gone: TypedPoolNumber[],
-  callImmediate: boolean
+  callImmediate: boolean,
+  errorMessage: string | null
 }
 
 export const carpoolInitialState: CarpoolState = {
@@ -20,5 +20,6 @@ export const carpoolInitialState: CarpoolState = {
   send: [],
   exit: [],
   gone: [],
-  callImmediate: false
+  callImmediate: false,
+  errorMessage: null
 }
