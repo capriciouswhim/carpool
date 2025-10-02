@@ -23,15 +23,15 @@
         <mat-icon>follow_the_signs</mat-icon>
         <span>Send Student</span>
     </button>
-    <button mat-menu-item class="menuitem" [class.show]="canExit()" (click)="escort()">
+    <button mat-menu-item class="menuitem" [class.show]="canExit()" (click)="exit()">
         <mat-icon>escalator_warning</mat-icon>
-        <span>Escort Student</span>
+        <span>Walk Student</span>
     </button>
-    <button mat-menu-item class="menuitem" [class.show]="canDispatch()" (click)="dispatch()">
+    <button mat-menu-item class="menuitem" [class.show]="canGone()" (click)="gone()">
         <mat-icon>flight_takeoff</mat-icon>
-        <span>Dispatch Car</span>
+        <span>Car Departing</span>
     </button>
-        <button mat-menu-item disabled class="menuitem" [class.show]="isGone()">
+    <button mat-menu-item disabled class="menuitem" [class.show]="isGone()">
         <mat-icon>no_crash</mat-icon>
         <span>Has Left</span>
     </button>

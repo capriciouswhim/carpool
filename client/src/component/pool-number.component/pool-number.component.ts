@@ -42,8 +42,8 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
     del = () => this.store.dispatch(carpoolAction.del({ poolNumber: this.typedPoolNumber().pool_number }));
     call = () => this.store.dispatch(carpoolAction.callOne({ poolNumber: this.typedPoolNumber().pool_number }));
     send = () => this.store.dispatch(carpoolAction.send({ poolNumber: this.typedPoolNumber().pool_number }));
-    escort = () => this.store.dispatch(carpoolAction.exit({ poolNumber: this.typedPoolNumber().pool_number }));
-    dispatch = () => this.store.dispatch(carpoolAction.gone({ poolNumber: this.typedPoolNumber().pool_number }));
+    exit = () => this.store.dispatch(carpoolAction.exit({ poolNumber: this.typedPoolNumber().pool_number }));
+    gone = () => this.store.dispatch(carpoolAction.gone({ poolNumber: this.typedPoolNumber().pool_number }));
 
     getBorderStyle() {
         return this.typedPoolNumber().state.toLowerCase()
@@ -65,8 +65,8 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
             case 'LANE':    return 'Car Arrived'
             case 'CALL':    return 'Called'
             case 'RECALL':  return 'Recalled'
-            case 'SEND':    return 'Student Sent'
-            case 'EXIT':    return 'Student Outside'
+            case 'SEND':    return 'Sent to Door'
+            case 'EXIT':    return 'Escorting'
             case 'GONE':    return 'Car Departed'
         }
     }
@@ -141,7 +141,7 @@ export class PoolNumberComponent implements OnChanges, OnDestroy {
                 return false;
         }
     }
-    canDispatch() {
+    canGone() {
         // if pref show all options, return true
         switch(this.typedPoolNumber().state) {
             case 'LANE':
