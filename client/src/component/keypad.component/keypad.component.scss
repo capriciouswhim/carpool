@@ -2,16 +2,23 @@
 
 :host {
     flex: none;
-    display: flex; flex-direction: row;
+    display: flex; flex-direction: column;
     justify-content: space-around;
-    margin-top: -2dvh;
+    margin-top: -2dvh; justify-content: center;
+    @media (max-aspect-ratio: 1) {
+      flex-direction: row;
+    }
+}
+
+.spacer {
+  flex: auto; border: 1px solid red;
 }
 
 .keypad {
     flex: none;
     display: grid;
-    grid-template-columns: repeat(3, 2cm) 0.3cm 2cm;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 2cm) auto 2cm;
+    gap: 0.5rem;
 }
 
 mat-form-field {
