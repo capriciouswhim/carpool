@@ -1,4 +1,6 @@
-<header><car-header></car-header></header>
-<main><router-outlet></router-outlet></main>
-<footer><car-version></car-version></footer>
-<car-error></car-error>
+<div class="content" [class.overscan]="overscan$ | async">
+    <header><car-header></car-header></header>
+    <main><router-outlet></router-outlet></main>
+    <footer><car-version></car-version></footer>
+    <car-error></car-error>
+</div>

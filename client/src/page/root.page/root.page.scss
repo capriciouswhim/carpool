@@ -1,7 +1,15 @@
-:host {
+@use '@angular/material' as mat;
+
+.content {
     display: grid; height: 100dvh;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 'header' 'main' 'footer';
+}
+
+$overscan: 2dvh;
+.overscan {
+    border: $overscan solid var(--mat-sys-surface);
+    height: calc(100dvh - $overscan * 2)
 }
 
 header {
