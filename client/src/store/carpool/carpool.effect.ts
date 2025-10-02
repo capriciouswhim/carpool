@@ -11,7 +11,7 @@ export class CarpoolEffect {
     private carpoolService = inject(CarpoolService)
 
     public test$ = createEffect(() => this.actions$.pipe(
-        startWith(carpoolAction.test()),
+        // startWith(carpoolAction.test()),
         ofType(carpoolAction.test),
         tap(_action => this.carpoolService.getTestData())
     ), { dispatch: false })
