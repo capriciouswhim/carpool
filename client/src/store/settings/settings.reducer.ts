@@ -9,14 +9,18 @@ interface SetBoolean { value: boolean }
 
 export const settingsReducer = createReducer(
     settingsInitialState,
-    on(settingsAction.setOverscan, (s,a) => setOverscan(s,a))
+    on(settingsAction.setSinistral, (s,a) => setBoolean(s, 'sinistral', a)),
+    on(settingsAction.setOverscan, (s,a) => setBoolean(s, 'overscan', a))
 )
 
-function setOverscan(s: SettingsState, a: SetBoolean) {
-    localStorage.setItem('overscan', a.value ? enabled : disabled)
+function setBoolean(s: SettingsState, n:string, a: SetBoolean) {
+    localStorage.setItem(n, a.value ? enabled : disabled)
 
-    return {
-        ...s,
-        overscan: a.value
+    const result: SettingsState = {
+        ...s
     }
+
+    Object.defineProperty(result, n, { value: a.value })
+
+    return result;
 }

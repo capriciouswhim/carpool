@@ -4,6 +4,7 @@ import { settingsSource } from "./settings.state";
 export const settingsAction = createActionGroup({
     source: settingsSource,
     events: {
-        setOverscan: props<{value: boolean}>()
+        setOverscan: props<{value: boolean}>(),
+        setSinistral: props<{value: boolean}>()
     }
 })

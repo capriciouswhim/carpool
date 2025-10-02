@@ -8,3 +8,4 @@ export const settingsFeature = createFeature({
 })
 
 export const selectOverscan = settingsFeature.selectOverscan
+export const selectSinistral = settingsFeature.selectSinistral

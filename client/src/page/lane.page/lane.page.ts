@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { KeypadComponent } from "../../component";
 import { Store } from "@ngrx/store";
-import { carpoolSelectLane } from "../../store";
+import { carpoolSelectLane, settingsSelectSinistral } from "../../store";
 import { AsyncPipe } from "@angular/common";
 import { PoolNumberComponent } from "../../component";
 
@@ -14,4 +14,5 @@ import { PoolNumberComponent } from "../../component";
 export class LanePage {
     store = inject(Store)
     nums$ = this.store.select(carpoolSelectLane)
+    sinistral$ = this.store.select(settingsSelectSinistral)
 }

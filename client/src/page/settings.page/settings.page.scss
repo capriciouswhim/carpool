@@ -1,8 +1,15 @@
 @use '@angular/material' as mat;
 
 :host {
+    height: 100%; overflow-y: scroll;
+
     display: flex; flex-direction: column;
     gap: 1dvh;
+}
+
+h2 {
+    margin: 0; border: 0; padding: 0;
+    margin-bottom: 1rem;
 }
 
 .sidebyside {

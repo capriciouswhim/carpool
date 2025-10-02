@@ -1,6 +1,8 @@
-<div class="queue">
-    @for(typedPoolNumber of (nums$ | async); track typedPoolNumber.pool_number) {
-        <car-pool-number [typedPoolNumber]="typedPoolNumber"></car-pool-number>
-    }
+<div class="content" [class.sinistral]="(sinistral$ | async)">
+    <div class="queue">
+        @for(typedPoolNumber of (nums$ | async); track typedPoolNumber.pool_number) {
+            <car-pool-number [typedPoolNumber]="typedPoolNumber"></car-pool-number>
+        }
+    </div>
+    <car-keypad></car-keypad>
 </div>
-<car-keypad></car-keypad>

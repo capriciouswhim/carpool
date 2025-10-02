@@ -5,5 +5,5 @@ export { carpoolAction, CarpoolEffect, carpoolFeature, carpoolSelectAll, carpool
 
 // Settings Feature
 
-import { settingsAction, settingsFeature, settingsSelectOverscan } from './settings/index'
-export { settingsAction, settingsFeature, settingsSelectOverscan }
+import { settingsAction, settingsFeature, settingsSelectOverscan, settingsSelectSinistral } from './settings/index'
+export { settingsAction, settingsFeature, settingsSelectOverscan, settingsSelectSinistral }

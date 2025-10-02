@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from "@ngrx/store";
-import { carpoolAction, carpoolSelectHaveData, settingsAction } from "../../store";
+import { carpoolAction, carpoolSelectHaveData, settingsAction, settingsSelectSinistral } from "../../store";
 import { settingsSelectOverscan } from "../../store";
 
 @Component({
@@ -18,7 +18,13 @@ import { settingsSelectOverscan } from "../../store";
 export class SettingsPage {
     store = inject(Store)
     haveData$ = this.store.select(carpoolSelectHaveData)
-    overscan$ = this.store.select(settingsSelectOverscan);
+    overscan$ = this.store.select(settingsSelectOverscan)
+    sinistral$ = this.store.select(settingsSelectSinistral)
+
+
+    onToggleSinistral($event: MatSlideToggleChange) {
+        this.store.dispatch(settingsAction.setSinistral({ value: $event.checked }))
+    }
 
     onToggleOverscan($event: MatSlideToggleChange) {
         this.store.dispatch(settingsAction.setOverscan({ value: $event.checked }))
