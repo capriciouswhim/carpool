@@ -1,13 +1,19 @@
 :host {
-    padding: 0 1dvh;
+    flex: auto; overflow-y: auto;
+    display: flex; flex-direction: column;
+    align-items: center;
+}
+
+main {
+    flex: auto;
+    padding: 0 1dvh; max-width: 6.5in;
 }
 
 cite, q {
     display: block;    
     font-size: xx-small;
-    margin: 0 5dvw; border: none; padding: 0;
+    margin: 0 5%; border: none; padding: 0;
     line-height: 1.2;
-    max-width: 50dvw;
 }
 
 li {
@@ -21,4 +27,9 @@ a {
 
 p {
     text-align: justify;
+}
+
+.fin {
+    margin: 3dvh; width: calc(100% - 6dvh - 2px);
+    text-align: center;
 }
